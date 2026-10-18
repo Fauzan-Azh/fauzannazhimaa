@@ -2,12 +2,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import GooeyNav from './GooeyNav';
 import Lanyard from './Lanyard';
 import RotatingHeroText from './RotatingHeroText';
 import HeroDock from './HeroDock';
 import LatticeLoader from './LatticeLoader';
 import StarBorder from './StarBorder';
+import SlingButton from './SlingButton';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -49,19 +51,69 @@ export default function Home() {
         </div>
       )}
 
-      {/* Floating Header / Navbar */}
+      {/* Header Container (Logo + Floating Navbar + Theme Button) */}
       {!isLoading && (
-        <header className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-fit flex justify-center">
-          <GooeyNav 
-            items={navItems}
-            initialActiveIndex={0}
-            theme="light"
-            size="md"
-            frame={true}
-            particleCount={10}
-            spread={30}
-            gooeyness={0.5}
-          />
+        <header className="fixed top-4 md:top-6 left-0 right-0 z-50 px-6 sm:px-12 md:px-16 flex items-center justify-between pointer-events-none">
+          
+          {/* Pojok Kiri: Logo dengan StarBorder (Lingkaran Sempurna & Gambar Jelas) */}
+          <div className="pointer-events-auto">
+            <StarBorder
+              as="a"
+              href=""
+              color="#18181b"
+              speed={4}
+              thickness={1.5}
+              radius={9999}
+              glow={0.4}
+              sparkle={true}
+              theme="light"
+              backgroundColor="#ffffff"
+              textColor="#18181b"
+              borderColor="rgba(24, 24, 27, 0.15)"
+              className="!w-12 !h-12 !p-0 !aspect-square rounded-full flex items-center justify-center hover:scale-105 transition-transform overflow-hidden relative z-10"
+            >
+              <div className="relative z-20 flex items-center justify-center w-full h-full p-2">
+                <Image
+                  src="/img/logo-square.png"
+                  alt="Logo"
+                  width={40}
+                  height={40}
+                  className="object-contain w-auto h-auto max-w-full max-h-full"
+                />
+              </div>
+            </StarBorder>
+          </div>
+
+          {/* Tengah: Floating Navbar */}
+          <div className="pointer-events-auto">
+            <GooeyNav 
+              items={navItems}
+              initialActiveIndex={0}
+              theme="light"
+              size="md"
+              frame={true}
+              particleCount={10}
+              spread={30}
+              gooeyness={0.5}
+            />
+          </div>
+
+          {/* Pojok Kanan: SlingButton (Theme Switcher Placeholder) */}
+          <div className="pointer-events-auto flex items-center">
+            <SlingButton
+              size={46}
+              padColor="#ffffff"
+              iconColor="#18181b"
+              wellColor="#e4e4e7"
+              bandColor="#a1a1aa"
+              accentColor="#18181b"
+              onSend={() => {
+                // Fungsionalitas pergantian tema dapat disematkan di sini setelah semua section selesai.
+                console.log('Toggle theme clicked');
+              }}
+            />
+          </div>
+
         </header>
       )}
 
