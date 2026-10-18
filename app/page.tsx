@@ -1,12 +1,24 @@
 // app/page.tsx
 'use client';
 
+import { useState, useEffect } from 'react';
 import GooeyNav from './GooeyNav';
 import Lanyard from './Lanyard';
 import RotatingHeroText from './RotatingHeroText';
 import HeroDock from './HeroDock';
+import LatticeLoader from './LatticeLoader';
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Durasi loading awal (misalnya 1.5 detik)
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
   const navItems = [
     { label: 'Home', href: '#hero' },
     { label: 'About', href: '#about' },
@@ -18,26 +30,47 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#fafafa] text-zinc-900 selection:bg-zinc-900 selection:text-white relative overflow-x-hidden font-sans">
       
-      {/* Floating Header / Navbar */}
-      <header className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-fit flex justify-center">
-        <GooeyNav 
-          items={navItems}
-          initialActiveIndex={0}
-          theme="light"
-          size="sm"
-          frame={true}
-          particleCount={10}
-          spread={30}
-          gooeyness={0.5}
-        />
-      </header>
+      {/* Layar Loading (Menutup seluruh halaman saat aktif) */}
+      {isLoading && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#fafafa] transition-opacity duration-500">
+          <LatticeLoader
+            status="working"
+            label="wet wet wet (⁠◔⁠‿⁠◔⁠)"
+            pattern="orbit"
+            grid={3}
+            shape="round"
+            cellSize={8}
+            gap={3}
+            fontSize={15}
+            color="#18181b"
+            glow={false}
+            showTimer={false}
+          />
+        </div>
+      )}
+
+      {/* Floating Header / Navbar (Hanya dirender & muncul setelah loading selesai) */}
+      {!isLoading && (
+        <header className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-fit flex justify-center animate-fade-in">
+          <GooeyNav 
+            items={navItems}
+            initialActiveIndex={0}
+            theme="light"
+            size="md"
+            frame={true}
+            particleCount={10}
+            spread={30}
+            gooeyness={0.5}
+          />
+        </header>
+      )}
 
       {/* HERO SECTION */}
       <section id="hero" className="min-h-screen flex flex-col lg:flex-row items-center justify-center px-6 sm:px-12 md:px-20 pt-28 pb-24 relative max-w-7xl mx-auto">
         
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
           
-          {/* Bagian Teks (Kiri pada Desktop, Atas pada Mobile) */}
+          {/* Bagian Teks (Hanya dirender setelah loading selesai agar animasi mulus dari awal) */}
           <div className="lg:col-span-7 space-y-5 text-center lg:text-left flex flex-col items-center lg:items-start">
             
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-200/60 border border-zinc-300/80 text-xs font-medium text-zinc-700">
@@ -48,11 +81,11 @@ export default function Home() {
             <div className="space-y-1 w-full">
               <p className="text-lg sm:text-xl font-medium text-zinc-600">Hi, I'm</p>
               <div className="w-full flex justify-center lg:justify-start">
-                <RotatingHeroText />
+                {!isLoading && <RotatingHeroText />}
               </div>
             </div>
 
-            <p className="text-zinc-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-lg font-normal">
+            <p className="text-zinc-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-lg font-normal text-justify">
               Lulusan Sarjana Ilmu Komputer Universitas Pertamina yang berfokus pada pengembangan website modern, sistem berbasis teknologi, serta antarmuka interaktif menggunakan <span className="text-zinc-900 font-semibold">Next.js, React, dan TypeScript</span>.
             </p>
 
@@ -74,20 +107,22 @@ export default function Home() {
 
           </div>
 
-          {/* Bagian Lanyard 3D (Kanan pada Desktop, di bawah teks dengan ukuran pas pada Mobile) */}
+          {/* Bagian Lanyard 3D (Hanya dirender setelah loading selesai agar animasi fisiknya mulai tepat setelah layar bersih) */}
           <div className="lg:col-span-5 h-[420px] sm:h-[500px] lg:h-[600px] w-full relative flex items-center justify-center">
             <div className="w-full h-full relative">
-              <Lanyard 
-                frontImage="/img/profile.jpg" 
-                backImage="/img/profile.jpg"
-                size={0.72}          /* Ukuran proporsional agar aman di mobile & desktop */
-                anchor="center"
-                strapLength={0.35}   
-                cardColor="#ffffff"
-                strapColor="#18181b"
-                gravity={1}
-                breeze={0.6}
-              />
+              {!isLoading && (
+                <Lanyard 
+                  frontImage="/img/profile.JPG" 
+                  backImage="/img/profile.JPG"
+                  size={0.72}
+                  anchor="center"
+                  strapLength={0.35}   
+                  cardColor="#ffffff"
+                  strapColor="#18181b"
+                  gravity={1}
+                  breeze={0.6}
+                />
+              )}
             </div>
           </div>
 
@@ -95,7 +130,7 @@ export default function Home() {
 
         {/* Dock Sosial Media di Tengah Bawah Hero Section */}
         <div className="mt-8 lg:absolute lg:bottom-8 lg:left-1/2 lg:-translate-x-1/2 z-20">
-          <HeroDock />
+          {!isLoading && <HeroDock />}
         </div>
       </section>
 
