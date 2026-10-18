@@ -264,6 +264,9 @@ export default function GooeyNav({
     const measure = () => {
       const box = stage.getBoundingClientRect();
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      
+      if (box.width === 0 || box.height === 0) return;
+
       view.width = box.width;
       view.height = box.height;
       const outerWidth = box.width + MARGIN * 2;

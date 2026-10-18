@@ -13,6 +13,7 @@ import SlingButton from './SlingButton';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -51,12 +52,12 @@ export default function Home() {
         </div>
       )}
 
-      {/* Header Container (Logo + Floating Navbar + Theme Button) */}
+      {/* HEADER CONTAINER */}
       {!isLoading && (
-        <header className="fixed top-4 md:top-6 left-0 right-0 z-50 px-6 sm:px-12 md:px-16 flex items-center justify-between pointer-events-none">
+        <header className="fixed top-4 md:top-6 left-0 right-0 z-50 px-4 sm:px-8 md:px-16 flex items-center justify-between pointer-events-none">
           
-          {/* Pojok Kiri: Logo dengan StarBorder (Lingkaran Sempurna & Gambar Jelas) */}
-          <div className="pointer-events-auto">
+          {/* Pojok Kiri: Logo dengan StarBorder */}
+          <div className="pointer-events-auto shrink-0">
             <StarBorder
               as="a"
               href=""
@@ -70,22 +71,22 @@ export default function Home() {
               backgroundColor="#ffffff"
               textColor="#18181b"
               borderColor="rgba(24, 24, 27, 0.15)"
-              className="!w-12 !h-12 !p-0 !aspect-square rounded-full flex items-center justify-center hover:scale-105 transition-transform overflow-hidden relative z-10"
+              className="!w-11 !h-11 md:!w-12 md:!h-12 !p-0 !aspect-square rounded-full flex items-center justify-center hover:scale-105 transition-transform overflow-hidden relative z-10"
             >
               <div className="relative z-20 flex items-center justify-center w-full h-full p-2">
                 <Image
                   src="/img/logo-square.png"
                   alt="Logo"
-                  width={40}
-                  height={40}
+                  width={26}
+                  height={26}
                   className="object-contain w-auto h-auto max-w-full max-h-full"
                 />
               </div>
             </StarBorder>
           </div>
 
-          {/* Tengah: Floating Navbar */}
-          <div className="pointer-events-auto">
+          {/* Tengah (Desktop): GooeyNav Normal */}
+          <div className="hidden md:flex pointer-events-auto items-center justify-center">
             <GooeyNav 
               items={navItems}
               initialActiveIndex={0}
@@ -98,19 +99,65 @@ export default function Home() {
             />
           </div>
 
-          {/* Pojok Kanan: SlingButton (Theme Switcher Placeholder) */}
-          <div className="pointer-events-auto flex items-center">
+          {/* Tengah (Mobile): Tombol Hamburger */}
+          <div className="md:hidden pointer-events-auto flex items-center justify-center">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle Menu"
+              className="flex items-center justify-center w-11 h-11 rounded-full bg-white border border-zinc-200/80 shadow-md text-zinc-900 active:scale-95 transition-transform"
+            >
+              {mobileMenuOpen ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
+
+          {/* Pojok Kanan: SlingButton (Theme Switcher) */}
+          <div className="pointer-events-auto shrink-0 flex items-center">
             <SlingButton
-              size={46}
+              size={44}
               padColor="#ffffff"
               iconColor="#18181b"
               wellColor="#e4e4e7"
               bandColor="#a1a1aa"
               accentColor="#18181b"
               onSend={() => {
-                // Fungsionalitas pergantian tema dapat disematkan di sini setelah semua section selesai.
                 console.log('Toggle theme clicked');
               }}
+            />
+          </div>
+
+          {/* Mobile Dropdown Menu dengan Visibilitas Stabil untuk WebGL/Gooey Filter */}
+          <div 
+            onClick={(e) => {
+              const link = (e.target as HTMLElement).closest('a');
+              if (link) {
+                setTimeout(() => {
+                  setMobileMenuOpen(false);
+                }, 350);
+              }
+            }}
+            className={`md:hidden pointer-events-auto fixed left-1/2 -translate-x-1/2 top-20 z-40 transition-all duration-300 ease-out ${
+              mobileMenuOpen 
+                ? 'opacity-100 visible translate-y-0' 
+                : 'opacity-0 invisible -translate-y-3 pointer-events-none'
+            }`}
+          >
+            <GooeyNav 
+              items={navItems}
+              initialActiveIndex={0}
+              theme="light"
+              size="sm"
+              frame={true}
+              particleCount={10}
+              spread={30}
+              gooeyness={0.6}
             />
           </div>
 
@@ -118,7 +165,7 @@ export default function Home() {
       )}
 
       {/* HERO SECTION */}
-      <section id="hero" className="min-h-screen flex flex-col lg:flex-row items-center justify-center px-6 sm:px-12 md:px-20 pt-28 pb-24 relative max-w-7xl mx-auto">
+      <section id="hero" className="min-h-screen flex flex-col lg:flex-row items-center justify-center px-6 sm:px-12 md:px-20 pt-36 sm:pt-32 pb-24 relative max-w-7xl mx-auto">
         
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
           
