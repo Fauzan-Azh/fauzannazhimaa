@@ -4,7 +4,7 @@
 import GooeyNav from './GooeyNav';
 import Lanyard from './Lanyard';
 import RotatingHeroText from './RotatingHeroText';
-import HeroDock from './HeroDock'; // <-- Dock Sosial Media
+import HeroDock from './HeroDock';
 
 export default function Home() {
   const navItems = [
@@ -33,11 +33,13 @@ export default function Home() {
       </header>
 
       {/* HERO SECTION */}
-      <section id="hero" className="min-h-screen flex items-center justify-center px-4 sm:px-8 md:px-16 pt-28 pb-24 relative">
-        <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <section id="hero" className="min-h-screen flex flex-col lg:flex-row items-center justify-center px-6 sm:px-12 md:px-20 pt-28 pb-24 relative max-w-7xl mx-auto">
+        
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
           
-          {/* Bagian Teks & FoldText (Kiri - 7 Kolom) */}
-          <div className="lg:col-span-7 space-y-5 text-center lg:text-left flex flex-col items-center lg:items-start z-10">
+          {/* Bagian Teks (Kiri pada Desktop, Atas pada Mobile) */}
+          <div className="lg:col-span-7 space-y-5 text-center lg:text-left flex flex-col items-center lg:items-start">
+            
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-200/60 border border-zinc-300/80 text-xs font-medium text-zinc-700">
               <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
               Open to Work
@@ -50,7 +52,7 @@ export default function Home() {
               </div>
             </div>
 
-            <p className="text-zinc-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl font-normal">
+            <p className="text-zinc-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-lg font-normal">
               Lulusan Sarjana Ilmu Komputer Universitas Pertamina yang berfokus pada pengembangan website modern, sistem berbasis teknologi, serta antarmuka interaktif menggunakan <span className="text-zinc-900 font-semibold">Next.js, React, dan TypeScript</span>.
             </p>
 
@@ -69,21 +71,22 @@ export default function Home() {
                 Get in Touch
               </a>
             </div>
+
           </div>
 
-          {/* Bagian Lanyard 3D (Kanan - Diperluas seluas-luasnya tanpa batas kotak) */}
-          <div className="lg:col-span-5 h-[550px] sm:h-[650px] md:h-[720px] w-full relative flex items-center justify-center overflow-visible">
-            <div className="absolute inset-0 w-[160%] h-[160%] -top-20 -right-20 pointer-events-auto">
+          {/* Bagian Lanyard 3D (Kanan pada Desktop, di bawah teks dengan ukuran pas pada Mobile) */}
+          <div className="lg:col-span-5 h-[420px] sm:h-[500px] lg:h-[600px] w-full relative flex items-center justify-center">
+            <div className="w-full h-full relative">
               <Lanyard 
-                frontImage="/img/profile.JPG" 
-                backImage="/img/profile.JPG"
-                size={0.45}
+                frontImage="/img/profile.jpg" 
+                backImage="/img/profile.jpg"
+                size={0.72}          /* Ukuran proporsional agar aman di mobile & desktop */
                 anchor="center"
-                strapLength={0.2}
+                strapLength={0.35}   
                 cardColor="#ffffff"
                 strapColor="#18181b"
                 gravity={1}
-                breeze={0.8}
+                breeze={0.6}
               />
             </div>
           </div>
@@ -91,11 +94,13 @@ export default function Home() {
         </div>
 
         {/* Dock Sosial Media di Tengah Bawah Hero Section */}
-        <HeroDock />
+        <div className="mt-8 lg:absolute lg:bottom-8 lg:left-1/2 lg:-translate-x-1/2 z-20">
+          <HeroDock />
+        </div>
       </section>
 
       {/* Section Berikutnya */}
-      <section id="about" className="min-h-screen flex items-center justify-center px-6 bg-white border-t border-zinc-200">
+      <section id="about" className="min-h-screen flex items-center justify-center px-6 bg-white border-t border-zinc-200 relative z-20">
         <h2 className="text-3xl font-semibold text-zinc-900">About Section</h2>
       </section>
 
