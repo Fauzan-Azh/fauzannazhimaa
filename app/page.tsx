@@ -112,8 +112,8 @@ export default function Home() {
             <div className="w-full h-full relative">
               {!isLoading && (
                 <Lanyard 
-                  frontImage="/img/profile.JPG" 
-                  backImage="/img/profile.JPG"
+                  frontImage="/img/profile.jpg" 
+                  backImage="/img/profile.jpg"
                   size={0.72}
                   anchor="center"
                   strapLength={0.35}   
