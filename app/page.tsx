@@ -7,12 +7,12 @@ import Lanyard from './Lanyard';
 import RotatingHeroText from './RotatingHeroText';
 import HeroDock from './HeroDock';
 import LatticeLoader from './LatticeLoader';
+import StarBorder from './StarBorder';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Durasi loading awal (misalnya 1.5 detik)
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1500);
@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#fafafa] text-zinc-900 selection:bg-zinc-900 selection:text-white relative overflow-x-hidden font-sans">
       
-      {/* Layar Loading (Menutup seluruh halaman saat aktif) */}
+      {/* Layar Loading */}
       {isLoading && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#fafafa] transition-opacity duration-500">
           <LatticeLoader
@@ -49,9 +49,9 @@ export default function Home() {
         </div>
       )}
 
-      {/* Floating Header / Navbar (Hanya dirender & muncul setelah loading selesai) */}
+      {/* Floating Header / Navbar */}
       {!isLoading && (
-        <header className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-fit flex justify-center animate-fade-in">
+        <header className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-fit flex justify-center">
           <GooeyNav 
             items={navItems}
             initialActiveIndex={0}
@@ -70,7 +70,7 @@ export default function Home() {
         
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
           
-          {/* Bagian Teks (Hanya dirender setelah loading selesai agar animasi mulus dari awal) */}
+          {/* Bagian Teks */}
           <div className="lg:col-span-7 space-y-5 text-center lg:text-left flex flex-col items-center lg:items-start">
             
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-200/60 border border-zinc-300/80 text-xs font-medium text-zinc-700">
@@ -89,32 +89,56 @@ export default function Home() {
               Lulusan Sarjana Ilmu Komputer Universitas Pertamina yang berfokus pada pengembangan website modern, sistem berbasis teknologi, serta antarmuka interaktif menggunakan <span className="text-zinc-900 font-semibold">Next.js, React, dan TypeScript</span>.
             </p>
 
-            {/* Tombol Aksi */}
+            {/* Tombol Aksi dengan Efek StarBorder */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 pt-2">
-              <a 
-                href="#projects" 
-                className="px-6 py-3 rounded-full bg-zinc-900 text-white font-medium text-sm hover:bg-zinc-800 transition-all shadow-md hover:shadow-lg"
+              {/* Button 1: Explore Projects (Dark Theme) */}
+              <StarBorder
+                as="a"
+                href="#projects"
+                color="#ffffff"
+                speed={4}
+                thickness={1.5}
+                radius={9999}
+                glow={0.6}
+                sparkle={true}
+                theme="dark"
+                backgroundColor="#18181b"
+                textColor="#ffffff"
+                className="text-sm font-medium shadow-md hover:scale-105 transition-transform"
               >
                 Explore Projects
-              </a>
-              <a 
-                href="#contact" 
-                className="px-6 py-3 rounded-full bg-white border border-zinc-300 text-zinc-800 font-medium text-sm hover:bg-zinc-100 hover:border-zinc-400 transition-all"
+              </StarBorder>
+
+              {/* Button 2: Get In Touch (Light Theme) */}
+              <StarBorder
+                as="a"
+                href="#contact"
+                color="#18181b"
+                speed={4}
+                thickness={1.5}
+                radius={9999}
+                glow={0.4}
+                sparkle={true}
+                theme="light"
+                backgroundColor="#ffffff"
+                textColor="#18181b"
+                borderColor="rgba(24, 24, 27, 0.2)"
+                className="text-sm font-medium hover:scale-105 transition-transform"
               >
                 Get in Touch
-              </a>
+              </StarBorder>
             </div>
 
           </div>
 
-          {/* Bagian Lanyard 3D (Hanya dirender setelah loading selesai agar animasi fisiknya mulai tepat setelah layar bersih) */}
+          {/* Bagian Lanyard 3D */}
           <div className="lg:col-span-5 h-[420px] sm:h-[500px] lg:h-[600px] w-full relative flex items-center justify-center">
             <div className="w-full h-full relative">
               {!isLoading && (
                 <Lanyard 
                   frontImage="/img/profile.jpg" 
                   backImage="/img/profile.jpg"
-                  size={0.72}
+                  size={0.7}
                   anchor="center"
                   strapLength={0.35}   
                   cardColor="#ffffff"
@@ -128,7 +152,7 @@ export default function Home() {
 
         </div>
 
-        {/* Dock Sosial Media di Tengah Bawah Hero Section */}
+        {/* Dock Sosial Media */}
         <div className="mt-8 lg:absolute lg:bottom-8 lg:left-1/2 lg:-translate-x-1/2 z-20">
           {!isLoading && <HeroDock />}
         </div>
