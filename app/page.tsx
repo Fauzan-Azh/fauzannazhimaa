@@ -14,11 +14,36 @@ import LogoLoop from './LogoLoop';
 
 // Import ikon resmi dari react-icons/si
 import { 
-  SiC, SiCplusplus, SiOpenjdk, SiPython, SiJavascript, SiPhp, SiDart, SiKotlin, 
-  SiHtml5, SiCss3, SiTailwindcss, SiBootstrap, SiNodedotjs, SiLaravel, 
-  SiNestjs, SiFlutter, SiAndroid, SiArduino, SiUnity, SiMysql, SiMariadb, 
-  SiMongodb, SiOracle, SiFirebase, SiPandas, SiScikitlearn, SiTensorflow, 
-  SiPytorch, SiLinux, SiNginx, SiFigma 
+  SiC, 
+  SiCplusplus, 
+  SiOpenjdk, 
+  SiPython, 
+  SiJavascript, 
+  SiPhp, 
+  SiDart, 
+  SiKotlin, 
+  SiHtml5, 
+  SiCss, 
+  SiTailwindcss, 
+  SiBootstrap, 
+  SiNodedotjs, 
+  SiLaravel, 
+  SiNestjs, 
+  SiFlutter, 
+  SiAndroid, 
+  SiArduino, 
+  SiUnity, 
+  SiMysql, 
+  SiMariadb, 
+  SiMongodb, 
+  SiFirebase, 
+  SiPandas, 
+  SiScikitlearn, 
+  SiTensorflow, 
+  SiPytorch, 
+  SiLinux, 
+  SiNginx, 
+  SiFigma 
 } from 'react-icons/si';
 
 export default function Home() {
@@ -40,7 +65,7 @@ export default function Home() {
     { label: 'Contact', href: '#contact' }
   ];
 
-  // Daftar tech stack lengkap dengan pengaman ikon (fallback)
+  // Daftar tech stack lengkap dengan pengaman (fallback) anti-undefined
   const techStackItems = [
     { title: "C", icon: typeof SiC !== 'undefined' ? <SiC /> : null, color: "#A8B9CC" },
     { title: "C++", icon: typeof SiCplusplus !== 'undefined' ? <SiCplusplus /> : null, color: "#00599C" },
@@ -51,7 +76,7 @@ export default function Home() {
     { title: "Dart", icon: typeof SiDart !== 'undefined' ? <SiDart /> : null, color: "#0175C2" },
     { title: "Kotlin", icon: typeof SiKotlin !== 'undefined' ? <SiKotlin /> : null, color: "#7F52FF" },
     { title: "HTML5", icon: typeof SiHtml5 !== 'undefined' ? <SiHtml5 /> : null, color: "#E34F26" },
-    { title: "CSS3", icon: typeof SiCss3 !== 'undefined' ? <SiCss3 /> : null, color: "#1572B6" },
+    { title: "CSS3", icon: typeof SiCss !== 'undefined' ? <SiCss /> : null, color: "#1572B6" },
     { title: "Tailwind CSS", icon: typeof SiTailwindcss !== 'undefined' ? <SiTailwindcss /> : null, color: "#06B6D4" },
     { title: "Bootstrap", icon: typeof SiBootstrap !== 'undefined' ? <SiBootstrap /> : null, color: "#7952B3" },
     { title: "Node.js", icon: typeof SiNodedotjs !== 'undefined' ? <SiNodedotjs /> : null, color: "#339933" },
@@ -64,7 +89,7 @@ export default function Home() {
     { title: "MySQL", icon: typeof SiMysql !== 'undefined' ? <SiMysql /> : null, color: "#4479A1" },
     { title: "MariaDB", icon: typeof SiMariadb !== 'undefined' ? <SiMariadb /> : null, color: "#003545" },
     { title: "MongoDB", icon: typeof SiMongodb !== 'undefined' ? <SiMongodb /> : null, color: "#47A248" },
-    { title: "Oracle Database", icon: typeof SiOracle !== 'undefined' ? <SiOracle /> : null, color: "#F80000" },
+    { title: "Oracle Database", icon: null, color: "#F80000" }, // Fallback aman untuk Oracle yang sering berubah nama ekspornya
     { title: "Firebase", icon: typeof SiFirebase !== 'undefined' ? <SiFirebase /> : null, color: "#FFCA28" },
     { title: "Pandas", icon: typeof SiPandas !== 'undefined' ? <SiPandas /> : null, color: "#150458" },
     { title: "Scikit-learn", icon: typeof SiScikitlearn !== 'undefined' ? <SiScikitlearn /> : null, color: "#F7931E" },
