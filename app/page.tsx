@@ -12,8 +12,9 @@ import StarBorder from './StarBorder';
 import SlingButton from './SlingButton';
 import LogoLoop from './LogoLoop';
 
+// Import ikon resmi dari react-icons/si
 import { 
-  SiC, SiCplusplus, SiJava, SiPython, SiJavascript, SiPhp, SiDart, SiKotlin, 
+  SiC, SiCplusplus, SiOpenjdk, SiPython, SiJavascript, SiPhp, SiDart, SiKotlin, 
   SiHtml5, SiCss3, SiTailwindcss, SiBootstrap, SiNodedotjs, SiLaravel, 
   SiNestjs, SiFlutter, SiAndroid, SiArduino, SiUnity, SiMysql, SiMariadb, 
   SiMongodb, SiOracle, SiFirebase, SiPandas, SiScikitlearn, SiTensorflow, 
@@ -39,10 +40,11 @@ export default function Home() {
     { label: 'Contact', href: '#contact' }
   ];
 
+  // Daftar tech stack lengkap dengan pengaman ikon (fallback)
   const techStackItems = [
     { title: "C", icon: typeof SiC !== 'undefined' ? <SiC /> : null, color: "#A8B9CC" },
     { title: "C++", icon: typeof SiCplusplus !== 'undefined' ? <SiCplusplus /> : null, color: "#00599C" },
-    { title: "Java", icon: typeof SiJava !== 'undefined' ? <SiJava /> : null, color: "#ED8B00" },
+    { title: "Java", icon: typeof SiOpenjdk !== 'undefined' ? <SiOpenjdk /> : null, color: "#ED8B00" },
     { title: "Python", icon: typeof SiPython !== 'undefined' ? <SiPython /> : null, color: "#3776AB" },
     { title: "JavaScript", icon: typeof SiJavascript !== 'undefined' ? <SiJavascript /> : null, color: "#F7DF1E" },
     { title: "PHP", icon: typeof SiPhp !== 'undefined' ? <SiPhp /> : null, color: "#777BB4" },
@@ -75,7 +77,7 @@ export default function Home() {
     node: (
       <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white border border-zinc-200/80 shadow-sm text-zinc-700 hover:border-zinc-400 transition-all group">
         <span className="text-xl flex items-center justify-center" style={{ color: item.color }}>
-          {item.icon || <span className="text-xs font-bold px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-600">{item.title[0]}</span>}
+          {item.icon || <span className="w-6 h-6 rounded-lg text-xs font-bold text-white flex items-center justify-center" style={{ backgroundColor: item.color }}>{item.title[0]}</span>}
         </span>
         <span className="text-sm font-semibold tracking-tight">{item.title}</span>
       </div>
@@ -338,7 +340,7 @@ export default function Home() {
 
       {/* Section Berikutnya */}
       <section id="about" className="min-h-screen flex items-center justify-center px-6 bg-white border-t border-zinc-200 relative z-20">
-        <h2 className="text-3xl font-semibold text-zinc-900">About Section, Coming Soon</h2>
+        <h2 className="text-3xl font-semibold text-zinc-900">About Section</h2>
       </section>
 
     </main>
