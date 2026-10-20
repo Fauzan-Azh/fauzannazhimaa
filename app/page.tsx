@@ -11,8 +11,10 @@ import LatticeLoader from './LatticeLoader';
 import StarBorder from './StarBorder';
 import SlingButton from './SlingButton';
 import LogoLoop from './LogoLoop';
+import BlurText from './BlurText';
+import Carousel from './Carousel';
+import TechText from './TechText';
 
-// Import ikon resmi dari react-icons/si
 import { 
   SiC, 
   SiCplusplus, 
@@ -65,7 +67,6 @@ export default function Home() {
     { label: 'Contact', href: '#contact' }
   ];
 
-  // Daftar tech stack lengkap dengan pengaman (fallback) anti-undefined
   const techStackItems = [
     { title: "C", icon: typeof SiC !== 'undefined' ? <SiC /> : null, color: "#A8B9CC" },
     { title: "C++", icon: typeof SiCplusplus !== 'undefined' ? <SiCplusplus /> : null, color: "#00599C" },
@@ -89,7 +90,7 @@ export default function Home() {
     { title: "MySQL", icon: typeof SiMysql !== 'undefined' ? <SiMysql /> : null, color: "#4479A1" },
     { title: "MariaDB", icon: typeof SiMariadb !== 'undefined' ? <SiMariadb /> : null, color: "#003545" },
     { title: "MongoDB", icon: typeof SiMongodb !== 'undefined' ? <SiMongodb /> : null, color: "#47A248" },
-    { title: "Oracle Database", icon: null, color: "#F80000" }, // Fallback aman untuk Oracle yang sering berubah nama ekspornya
+    { title: "Oracle Database", icon: null, color: "#F80000" },
     { title: "Firebase", icon: typeof SiFirebase !== 'undefined' ? <SiFirebase /> : null, color: "#FFCA28" },
     { title: "Pandas", icon: typeof SiPandas !== 'undefined' ? <SiPandas /> : null, color: "#150458" },
     { title: "Scikit-learn", icon: typeof SiScikitlearn !== 'undefined' ? <SiScikitlearn /> : null, color: "#F7931E" },
@@ -110,6 +111,21 @@ export default function Home() {
     title: item.title,
     hoverColor: item.color
   }));
+
+  const aboutImages = [
+    { image: '/img/about/1.jpg', alt: 'About photo 1' },
+    { image: '/img/about/2.jpg', alt: 'About photo 2' },
+    { image: '/img/about/3.jpg', alt: 'About photo 3' },
+    { image: '/img/about/4.jpeg', alt: 'About photo 4' },
+    { image: '/img/about/5.jpeg', alt: 'About photo 5' },
+    { image: '/img/about/6.jpeg', alt: 'About photo 6' },
+    { image: '/img/about/7.jpeg', alt: 'About photo 7' },
+    { image: '/img/about/8.jpeg', alt: 'About photo 8' },
+    { image: '/img/about/9.jpeg', alt: 'About photo 9' },
+    { image: '/img/about/10.jpeg', alt: 'About photo 10' },
+    { image: '/img/about/11.jpeg', alt: 'About photo 11' },
+    { image: '/img/about/12.jpg', alt: 'About photo 12' },
+  ];
 
   return (
     <main className="min-h-screen bg-[#fafafa] text-zinc-900 selection:bg-zinc-900 selection:text-white relative overflow-x-hidden font-sans">
@@ -136,8 +152,6 @@ export default function Home() {
       {/* HEADER CONTAINER */}
       {!isLoading && (
         <header className="fixed top-4 md:top-6 left-0 right-0 z-50 px-4 sm:px-8 md:px-16 flex items-center justify-between pointer-events-none">
-          
-          {/* Pojok Kiri: Logo dengan StarBorder */}
           <div className="pointer-events-auto shrink-0">
             <StarBorder
               as="a"
@@ -166,7 +180,6 @@ export default function Home() {
             </StarBorder>
           </div>
 
-          {/* Tengah (Desktop): GooeyNav Normal */}
           <div className="hidden md:flex pointer-events-auto items-center justify-center">
             <GooeyNav 
               items={navItems}
@@ -180,7 +193,6 @@ export default function Home() {
             />
           </div>
 
-          {/* Tengah (Mobile): Tombol Hamburger */}
           <div className="md:hidden pointer-events-auto flex items-center justify-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -199,7 +211,6 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Pojok Kanan: SlingButton (Theme Switcher) */}
           <div className="pointer-events-auto shrink-0 flex items-center">
             <SlingButton
               size={44}
@@ -214,7 +225,6 @@ export default function Home() {
             />
           </div>
 
-          {/* Mobile Dropdown Menu dengan Auto-Close dan Jeda Animasi Gelembung */}
           <div 
             onClick={(e) => {
               const link = (e.target as HTMLElement).closest('a');
@@ -241,16 +251,14 @@ export default function Home() {
               gooeyness={0.6}
             />
           </div>
-
         </header>
       )}
 
       {/* HERO SECTION */}
-      <section id="hero" className="min-h-screen flex flex-col justify-center px-6 sm:px-12 md:px-20 pt-36 sm:pt-32 pb-16 relative max-w-7xl mx-auto">
+      <section id="hero" className="w-full min-h-screen bg-[#fafafa] rounded-b-[3rem] md:rounded-b-[4.5rem] shadow-sm relative overflow-hidden z-10 flex flex-col justify-center pt-36 sm:pt-32 pb-32">
         
-        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10 mb-20">
+        <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 md:px-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10 mb-16">
           
-          {/* Bagian Teks */}
           <div className="lg:col-span-7 space-y-5 text-center lg:text-left flex flex-col items-center lg:items-start">
             
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-200/60 border border-zinc-300/80 text-xs font-medium text-zinc-700">
@@ -269,7 +277,6 @@ export default function Home() {
               Lulusan Sarjana Ilmu Komputer Universitas Pertamina yang berfokus pada pengembangan website modern, sistem berbasis teknologi, serta antarmuka interaktif menggunakan <span className="text-zinc-900 font-semibold">Next.js, React, dan TypeScript</span>.
             </p>
 
-            {/* Tombol Aksi dengan Efek StarBorder */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 pt-2">
               <StarBorder
                 as="a"
@@ -309,7 +316,6 @@ export default function Home() {
 
           </div>
 
-          {/* Bagian Lanyard 3D */}
           <div className="lg:col-span-5 h-[420px] sm:h-[500px] lg:h-[600px] w-full relative flex items-center justify-center">
             <div className="w-full h-full relative">
               {!isLoading && (
@@ -330,26 +336,24 @@ export default function Home() {
 
         </div>
 
-        {/* 1. Dock Sosial Media (Melayang di bawah konten utama hero) */}
-        <div className="absolute bottom-28 left-1/2 -translate-x-1/2 z-25 flex justify-center w-full">
+        {/* 1. Dock Sosial Media */}
+        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-25 flex justify-center w-full">
           {!isLoading && <HeroDock />}
         </div>
 
-        {/* 2 & 3. What I Use & LogoLoop (Di bagian paling bawah hero section) */}
-        <div className="absolute bottom-4 left-0 right-0 w-full flex flex-col items-center gap-2 z-20 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto">
-          {/* Judul What I Use */}
+        {/* 2 & 3. What I Use & LogoLoop */}
+        <div className="absolute bottom-3 left-0 right-0 w-full flex flex-col items-center gap-1 z-20 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto">
           <div className="text-center">
             <h3 className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-widest">What I Use</h3>
           </div>
 
-          {/* LogoLoop */}
           <div className="w-full">
             {!isLoading && (
               <LogoLoop
                 logos={techStackItems}
                 speed={70}
                 direction="left"
-                logoHeight={40}
+                logoHeight={36}
                 gap={20}
                 pauseOnHover={true}
                 scaleOnHover={true}
@@ -363,9 +367,88 @@ export default function Home() {
 
       </section>
 
-      {/* Section Berikutnya */}
-      <section id="about" className="min-h-screen flex items-center justify-center px-6 bg-white border-t border-zinc-200 relative z-20">
-        <h2 className="text-3xl font-semibold text-zinc-900">About Section</h2>
+      {/* ABOUT SECTION */}
+      {/* Diperbesar jarak atasnya (pt-36 sm:pt-48) dan scroll-mt-36 agar saat navbar diklik, posisi layarnya turun pas melewati logo loop hero */}
+      <section 
+        id="about" 
+        className="w-full bg-[#f4f4f6] rounded-b-[3rem] md:rounded-b-[4.5rem] shadow-sm relative overflow-hidden z-0 pt-30 sm:pt-48 pb-28 -mt-16 sm:-mt-0 scroll-mt-0"
+      >
+        <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 md:px-20 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          
+          {/* Kolom Kiri: Judul TechText & BlurText */}
+          <div className="lg:col-span-7 space-y-5 flex flex-col items-start text-justify">
+            
+            <div className="w-full h-[70px] sm:h-[85px] relative flex items-center -ml-5 sm:-ml-6">
+              {!isLoading && (
+                <TechText
+                  text="Get to Know Me"
+                  fontWeight={700}
+                  fontSize={60}
+                  letterSpacing={-0.03}
+                  reveal="letter"
+                  dashLength={4}
+                  dashGap={2}
+                  specks={8}
+                  intro="type"
+                  introDuration={1.2}
+                  clickKick
+                  guides={false}
+                  align="left"
+                />
+              )}
+            </div>
+
+            <div className="text-zinc-600 text-base sm:text-lg leading-relaxed font-normal w-full">
+              {!isLoading && (
+                <BlurText
+                  text="Saya adalah seorang Sarjana Ilmu Komputer lulusan Universitas Pertamina yang bersemangat dalam pengembangan aplikasi web modern, sistem berbasis teknologi, serta perancangan antarmuka digital yang bersih dan interaktif. Berbekal pengalaman profesional di bidang rekayasa perangkat lunak dan riset sistem cerdas, saya selalu termotivasi untuk menghadirkan solusi digital yang fungsional, efisien, dan berpusat pada pengguna."
+                  effect="blur"
+                  animateBy="words"
+                  direction="top"
+                  threshold={0.1}
+                  delay={100}
+                  stepDuration={0.3}
+                  blur={8}
+                  distance={40}
+                  focusOnHover={true}
+                  className="w-full text-justify"
+                />
+              )}
+            </div>
+          </div>
+
+          {/* Kolom Kanan: Carousel Foto */}
+          <div className="lg:col-span-5 w-full flex items-center justify-center">
+            <div className="w-full relative h-[380px] flex items-center justify-center">
+              {!isLoading && (
+                <Carousel
+                  items={aboutImages}
+                  baseWidth={360}
+                  aspectRatio={0.85}
+                  effect="slide"
+                  indicator="bars"
+                  frame={false}
+                  arrows={false}
+                  peek={32}
+                  gap={16}
+                  radius={20}
+                  loop
+                  autoplay
+                  autoplayDelay={4000}
+                  pauseOnHover
+                  theme="light"
+                />
+              )}
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      {/* SECTION SELANJUTNYA (PROJECTS) */}
+      <section id="projects" className="min-h-screen flex items-center justify-center px-6 relative z-0 pt-20 pb-16">
+        <h2 className="text-3xl font-semibold text-zinc-900">Projects Section</h2>
       </section>
 
     </main>
