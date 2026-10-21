@@ -14,6 +14,7 @@ import LogoLoop from './LogoLoop';
 import BlurText from './BlurText';
 import Carousel from './Carousel';
 import TechText from './TechText';
+import SpotlightCard from './SpotlightCard';
 
 import { 
   SiC, 
@@ -51,6 +52,7 @@ import {
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null); // State untuk modal detail project
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -125,6 +127,54 @@ export default function Home() {
     { image: '/img/about/10.jpeg', alt: 'About photo 10' },
     { image: '/img/about/11.jpeg', alt: 'About photo 11' },
     { image: '/img/about/12.jpg', alt: 'About photo 12' },
+  ];
+
+  // Data Proyek Berdasarkan Portofolio & CV Anda
+  const projectsData = [
+    {
+      id: 'aiamanggihbarat',
+      title: 'Nagari Aia Manggih Barat Portal',
+      category: 'Web Development & SEO',
+      description: 'Membangun, mengonfigurasi, dan meluncurkan portal publik resmi nagari menggunakan teknologi modern dan optimasi mesin pencari.',
+      fullDescription: 'Proyek pengembangan portal resmi pemerintahan tingkat nagari (aiamanggihbarat.com) untuk transparansi informasi publik dan layanan masyarakat. Dibangun menggunakan Next.js untuk performa tinggi, terintegrasi dengan Supabase sebagai backend database, serta optimasi penuh menggunakan Google Search Console.',
+      image: '/img/projects/aiamanggihbarat.jpg', // Sesuaikan path gambar jika ada
+      tools: ['Next.js', 'Supabase', 'Tailwind CSS', 'Google Search Console'],
+      link: 'https://aiamanggihbarat.com',
+      linkText: 'Visit Live Site'
+    },
+    {
+      id: 'wifisensing',
+      title: 'WiFi Sensing Indoor Detection',
+      category: 'IoT & Machine Learning (Thesis)',
+      description: 'Penelitian skripsi mengenai deteksi kehadiran manusia indoor menggunakan Channel State Information (CSI) dan Machine Learning.',
+      fullDescription: 'Tesis sarjana Ilmu Komputer yang meneliti pemanfaatan sinyal WiFi (CSI & RSSI) pada mikrokontroler ESP32 untuk mendeteksi aktivitas manusia di dalam ruangan. Data diproses menggunakan berbagai model machine learning seperti LSTM dengan Self-Attention, Random Forest, dan Support Vector Machines (SVM).',
+      image: '/img/projects/wifi-sensing.jpg',
+      tools: ['ESP32', 'Python', 'LSTM', 'Scikit-learn', 'SVM', 'MicroPython'],
+      link: 'https://github.com/fauzanazhima',
+      linkText: 'GitHub Repository'
+    },
+    {
+      id: 'upartner',
+      title: 'UPartner Collaborative Platform',
+      category: 'Full-Stack Web App',
+      description: 'Platform web kolaboratif untuk manajemen proyek akademik mahasiswa Universitas Pertamina.',
+      fullDescription: 'Aplikasi web yang dirancang khusus untuk memfasilitasi mahasiswa dalam mengelola kolaborasi tim, pembagian tugas, dan integrasi kode proyek perkuliahan secara terpusat dan efisien.',
+      image: '/img/projects/upartner.jpg',
+      tools: ['React', 'Node.js', 'Tailwind CSS', 'Git'],
+      link: 'https://github.com/fauzanazhima',
+      linkText: 'GitHub Repository'
+    },
+    {
+      id: 'upartner',
+      title: 'UPartner Collaborative Platform',
+      category: 'Full-Stack Web App',
+      description: 'Platform web kolaboratif untuk manajemen proyek akademik mahasiswa Universitas Pertamina.',
+      fullDescription: 'Aplikasi web yang dirancang khusus untuk memfasilitasi mahasiswa dalam mengelola kolaborasi tim, pembagian tugas, dan integrasi kode proyek perkuliahan secara terpusat dan efisien.',
+      image: '/img/projects/upartner.jpg',
+      tools: ['React', 'Node.js', 'Tailwind CSS', 'Git'],
+      link: 'https://github.com/fauzanazhima',
+      linkText: 'GitHub Repository'
+    }
   ];
 
   return (
@@ -256,11 +306,8 @@ export default function Home() {
 
       {/* HERO SECTION */}
       <section id="hero" className="w-full min-h-screen bg-[#fafafa] rounded-b-[3rem] md:rounded-b-[4.5rem] shadow-sm relative overflow-hidden z-10 flex flex-col justify-center pt-36 sm:pt-32 pb-32">
-        
         <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 md:px-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10 mb-16">
-          
           <div className="lg:col-span-7 space-y-5 text-center lg:text-left flex flex-col items-center lg:items-start">
-            
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-200/60 border border-zinc-300/80 text-xs font-medium text-zinc-700">
               <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
               Open to Work
@@ -313,7 +360,6 @@ export default function Home() {
                 Get in Touch
               </StarBorder>
             </div>
-
           </div>
 
           <div className="lg:col-span-5 h-[420px] sm:h-[500px] lg:h-[600px] w-full relative flex items-center justify-center">
@@ -333,20 +379,16 @@ export default function Home() {
               )}
             </div>
           </div>
-
         </div>
 
-        {/* 1. Dock Sosial Media */}
         <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-25 flex justify-center w-full">
           {!isLoading && <HeroDock />}
         </div>
 
-        {/* 2 & 3. What I Use & LogoLoop */}
         <div className="absolute bottom-3 left-0 right-0 w-full flex flex-col items-center gap-1 z-20 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto">
           <div className="text-center">
             <h3 className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-widest">What I Use</h3>
           </div>
-
           <div className="w-full">
             {!isLoading && (
               <LogoLoop
@@ -364,20 +406,15 @@ export default function Home() {
             )}
           </div>
         </div>
-
       </section>
 
       {/* ABOUT SECTION */}
-      {/* Diperbesar jarak atasnya (pt-36 sm:pt-48) dan scroll-mt-36 agar saat navbar diklik, posisi layarnya turun pas melewati logo loop hero */}
       <section 
         id="about" 
-        className="w-full bg-[#f4f4f6] rounded-b-[3rem] md:rounded-b-[4.5rem] shadow-sm relative overflow-hidden z-0 pt-30 sm:pt-48 pb-28 -mt-16 sm:-mt-0 scroll-mt-0"
+        className="w-full bg-[#f4f4f6] rounded-b-[3rem] md:rounded-b-[4.5rem] shadow-sm relative overflow-hidden z-0 pt-36 sm:pt-48 pb-28 -mt-16 sm:-mt-20 scroll-mt-36"
       >
         <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 md:px-20 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          
-          {/* Kolom Kiri: Judul TechText & BlurText */}
           <div className="lg:col-span-7 space-y-5 flex flex-col items-start text-justify">
-            
             <div className="w-full h-[70px] sm:h-[85px] relative flex items-center -ml-5 sm:-ml-6">
               {!isLoading && (
                 <TechText
@@ -417,7 +454,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Kolom Kanan: Carousel Foto */}
           <div className="lg:col-span-5 w-full flex items-center justify-center">
             <div className="w-full relative h-[380px] flex items-center justify-center">
               {!isLoading && (
@@ -441,14 +477,162 @@ export default function Home() {
               )}
             </div>
           </div>
-
         </div>
-
       </section>
 
-      {/* SECTION SELANJUTNYA (PROJECTS) */}
-      <section id="projects" className="min-h-screen flex items-center justify-center px-6 relative z-0 pt-20 pb-16">
-        <h2 className="text-3xl font-semibold text-zinc-900">Projects Section</h2>
+      {/* PROJECTS SECTION */}
+      <section id="projects" className="w-full bg-[#fafafa] py-28 px-6 sm:px-12 md:px-20 relative z-10 scroll-mt-24">
+        <div className="max-w-7xl mx-auto space-y-12">
+          <div className="text-center space-y-3">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">Featured Projects</h2>
+            <p className="text-zinc-600 max-w-2xl mx-auto text-sm sm:text-base">
+              Beberapa karya unggulan yang mencakup pengembangan web modern, sistem cerdas IoT, dan riset akademik.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projectsData.map((project) => (
+              <SpotlightCard
+                key={project.id}
+                theme="light"
+                spotlightColor="rgba(24, 24, 27, 0.08)"
+                intensity={0.2}
+                spotlightSize={280}
+                className="flex flex-col justify-between h-full border border-zinc-200/80 rounded-3xl p-6 transition-all hover:shadow-lg"
+              >
+                <div className="space-y-4">
+                  {/* Thumbnail / Cover Project */}
+                  <div className="relative w-full h-48 rounded-2xl overflow-hidden bg-zinc-100 border border-zinc-200/60">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  </div>
+
+                  {/* Kategori & Judul */}
+                  <div className="space-y-1">
+                    <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wider">{project.category}</span>
+                    <h3 className="text-xl font-bold text-zinc-900">{project.title}</h3>
+                  </div>
+
+                  {/* Deskripsi Singkat */}
+                  <p className="text-zinc-600 text-sm leading-relaxed">
+                    {project.description}
+                  </p>
+
+                  {/* Label Tools / Bahasa / Bidang */}
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {project.tools.map((tool, idx) => (
+                      <span key={idx} className="px-2.5 py-1 text-xs font-medium bg-zinc-100 text-zinc-700 rounded-lg border border-zinc-200/60">
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tombol Aksi (2 Tombol) */}
+                <div className="flex items-center gap-3 pt-6 mt-6 border-t border-zinc-100">
+                  {/* Tombol 1: Buka Detail Project (Modal) */}
+                  <button
+                    onClick={() => setSelectedProject(project)}
+                    className="flex-1 py-2.5 px-4 rounded-xl bg-zinc-900 text-white text-xs font-semibold shadow-sm hover:bg-zinc-800 transition-colors text-center"
+                  >
+                    Details
+                  </button>
+
+                  {/* Tombol 2: Link Eksternal (GitHub / Live Demo) */}
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-2.5 px-4 rounded-xl bg-white border border-zinc-200 text-zinc-900 text-xs font-semibold hover:bg-zinc-50 transition-colors text-center flex items-center justify-center gap-1.5"
+                  >
+                    <span>{project.linkText}</span>
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </SpotlightCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* MODAL DETAIL PROJECT */}
+      {selectedProject && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center bg-zinc-900/60 backdrop-blur-sm p-4 animate-fadeIn">
+          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative space-y-6 max-h-[90vh] overflow-y-auto">
+            {/* Tombol Close */}
+            <button
+              onClick={() => setSelectedProject(null)}
+              className="absolute top-5 right-5 w-9 h-9 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-600 hover:bg-zinc-200 transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div className="space-y-2">
+              <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wider">{selectedProject.category}</span>
+              <h3 className="text-2xl sm:text-3xl font-bold text-zinc-900">{selectedProject.title}</h3>
+            </div>
+
+            <div className="relative w-full h-64 sm:h-72 rounded-2xl overflow-hidden bg-zinc-100 border border-zinc-200">
+              <Image
+                src={selectedProject.image}
+                alt={selectedProject.title}
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="font-semibold text-zinc-900 text-sm tracking-wide uppercase">Overview & Detail</h4>
+              <p className="text-zinc-600 text-sm sm:text-base leading-relaxed text-justify">
+                {selectedProject.fullDescription}
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="font-semibold text-zinc-900 text-sm tracking-wide uppercase">Technologies & Tools</h4>
+              <div className="flex flex-wrap gap-2">
+                {selectedProject.tools.map((tool, idx) => (
+                  <span key={idx} className="px-3 py-1 text-xs font-medium bg-zinc-100 text-zinc-800 rounded-lg border border-zinc-200">
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="pt-4 flex items-center justify-end gap-3 border-t border-zinc-100">
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="px-5 py-2.5 rounded-xl bg-zinc-100 text-zinc-700 text-sm font-semibold hover:bg-zinc-200 transition-colors"
+              >
+                Close
+              </button>
+              <a
+                href={selectedProject.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2.5 rounded-xl bg-zinc-900 text-white text-sm font-semibold hover:bg-zinc-800 transition-colors flex items-center gap-2"
+              >
+                <span>{selectedProject.linkText}</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SECTION SELANJUTNYA (EXPERIENCE) */}
+      <section id="experience" className="min-h-screen flex items-center justify-center px-6 relative z-0 pt-20 pb-16">
+        <h2 className="text-3xl font-semibold text-zinc-900">Experience Section</h2>
       </section>
 
     </main>
