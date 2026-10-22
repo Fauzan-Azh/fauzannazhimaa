@@ -14,7 +14,6 @@ import LogoLoop from './LogoLoop';
 import BlurText from './BlurText';
 import Carousel from './Carousel';
 import TechText from './TechText';
-import SpotlightCard from './SpotlightCard';
 
 import { 
   SiC, 
@@ -52,7 +51,8 @@ import {
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState(null); // State untuk modal detail project
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [activeProjectIndex, setActiveProjectIndex] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -129,7 +129,6 @@ export default function Home() {
     { image: '/img/about/12.jpg', alt: 'About photo 12' },
   ];
 
-  // Data Proyek Berdasarkan Portofolio & CV Anda
   const projectsData = [
     {
       id: 'aiamanggihbarat',
@@ -137,10 +136,10 @@ export default function Home() {
       category: 'Web Development & SEO',
       description: 'Membangun, mengonfigurasi, dan meluncurkan portal publik resmi nagari menggunakan teknologi modern dan optimasi mesin pencari.',
       fullDescription: 'Proyek pengembangan portal resmi pemerintahan tingkat nagari (aiamanggihbarat.com) untuk transparansi informasi publik dan layanan masyarakat. Dibangun menggunakan Next.js untuk performa tinggi, terintegrasi dengan Supabase sebagai backend database, serta optimasi penuh menggunakan Google Search Console.',
-      image: '/img/projects/aiamanggihbarat.jpg', // Sesuaikan path gambar jika ada
+      image: '/img/projects/aiamanggihbarat.jpg',
       tools: ['Next.js', 'Supabase', 'Tailwind CSS', 'Google Search Console'],
       link: 'https://aiamanggihbarat.com',
-      linkText: 'Visit Live Site'
+      linkText: 'Live Site'
     },
     {
       id: 'wifisensing',
@@ -163,19 +162,15 @@ export default function Home() {
       tools: ['React', 'Node.js', 'Tailwind CSS', 'Git'],
       link: 'https://github.com/fauzanazhima',
       linkText: 'GitHub Repository'
-    },
-    {
-      id: 'upartner',
-      title: 'UPartner Collaborative Platform',
-      category: 'Full-Stack Web App',
-      description: 'Platform web kolaboratif untuk manajemen proyek akademik mahasiswa Universitas Pertamina.',
-      fullDescription: 'Aplikasi web yang dirancang khusus untuk memfasilitasi mahasiswa dalam mengelola kolaborasi tim, pembagian tugas, dan integrasi kode proyek perkuliahan secara terpusat dan efisien.',
-      image: '/img/projects/upartner.jpg',
-      tools: ['React', 'Node.js', 'Tailwind CSS', 'Git'],
-      link: 'https://github.com/fauzanazhima',
-      linkText: 'GitHub Repository'
     }
   ];
+
+  const carouselItems = projectsData.map((project) => ({
+    image: project.image,
+    alt: project.title
+  }));
+
+  const currentProject = projectsData[activeProjectIndex] || projectsData[0];
 
   return (
     <main className="min-h-screen bg-[#fafafa] text-zinc-900 selection:bg-zinc-900 selection:text-white relative overflow-x-hidden font-sans">
@@ -482,82 +477,119 @@ export default function Home() {
 
       {/* PROJECTS SECTION */}
       <section id="projects" className="w-full bg-[#fafafa] py-28 px-6 sm:px-12 md:px-20 relative z-10 scroll-mt-24">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <div className="text-center space-y-3">
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">Featured Projects</h2>
-            <p className="text-zinc-600 max-w-2xl mx-auto text-sm sm:text-base">
-              Beberapa karya unggulan yang mencakup pengembangan web modern, sistem cerdas IoT, dan riset akademik.
-            </p>
-          </div>
+        <div className="max-w-7xl mx-auto space-y-16">
+          
+          {/* Main Showcase Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            
+            {/* Kolom Kiri: Header + Carousel Autoplay */}
+            <div className="lg:col-span-7 space-y-6 w-full">
+              <div className="space-y-2">
+                <span className="text-xs font-semibold text-emerald-600 uppercase tracking-widest">Selected Work</span>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">
+                  Featured Projects Showcase
+                </h2>
+              </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projectsData.map((project) => (
-              <SpotlightCard
-                key={project.id}
-                theme="light"
-                spotlightColor="rgba(24, 24, 27, 0.08)"
-                intensity={0.2}
-                spotlightSize={280}
-                className="flex flex-col justify-between h-full border border-zinc-200/80 rounded-3xl p-6 transition-all hover:shadow-lg"
-              >
-                <div className="space-y-4">
-                  {/* Thumbnail / Cover Project */}
-                  <div className="relative w-full h-48 rounded-2xl overflow-hidden bg-zinc-100 border border-zinc-200/60">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover transition-transform duration-500 hover:scale-105"
-                    />
-                  </div>
+              <div className="w-full max-w-xl overflow-hidden py-4">
+                {!isLoading && (
+                  <Carousel
+                    items={carouselItems}
+                    baseWidth={480}
+                    aspectRatio={1.3}
+                    effect="slide"
+                    indicator="bars"
+                    arrows={true}
+                    frame={false}
+                    peek={32}
+                    gap={16}
+                    radius={20}
+                    loop={true}
+                    autoplay={true}
+                    autoplayDelay={4000}
+                    pauseOnHover={true}
+                    theme="light"
+                    onChange={(index) => setActiveProjectIndex(index)}
+                  />
+                )}
+              </div>
+            </div>
 
-                  {/* Kategori & Judul */}
-                  <div className="space-y-1">
-                    <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wider">{project.category}</span>
-                    <h3 className="text-xl font-bold text-zinc-900">{project.title}</h3>
-                  </div>
-
-                  {/* Deskripsi Singkat */}
-                  <p className="text-zinc-600 text-sm leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  {/* Label Tools / Bahasa / Bidang */}
-                  <div className="flex flex-wrap gap-1.5 pt-2">
-                    {project.tools.map((tool, idx) => (
-                      <span key={idx} className="px-2.5 py-1 text-xs font-medium bg-zinc-100 text-zinc-700 rounded-lg border border-zinc-200/60">
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
+            {/* Kolom Kanan: Detail Informasi Proyek Melayang (Borderless / Unframed) */}
+            <div className="lg:col-span-5 space-y-8">
+              
+              <div className="space-y-5 transition-all px-2 pt-12">
+                <div className="space-y-1.5">
+                  <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">
+                    {currentProject.category}
+                  </span>
+                  <h3 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 tracking-tight">
+                    {currentProject.title}
+                  </h3>
                 </div>
 
-                {/* Tombol Aksi (2 Tombol) */}
-                <div className="flex items-center gap-3 pt-6 mt-6 border-t border-zinc-100">
-                  {/* Tombol 1: Buka Detail Project (Modal) */}
-                  <button
-                    onClick={() => setSelectedProject(project)}
-                    className="flex-1 py-2.5 px-4 rounded-xl bg-zinc-900 text-white text-xs font-semibold shadow-sm hover:bg-zinc-800 transition-colors text-center"
-                  >
-                    Details
-                  </button>
+                <p className="text-zinc-600 text-sm sm:text-base leading-relaxed">
+                  {currentProject.description}
+                </p>
 
-                  {/* Tombol 2: Link Eksternal (GitHub / Live Demo) */}
+                {/* Tech Stack Badges */}
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {currentProject.tools.map((tool, idx) => (
+                    <span key={idx} className="px-3 py-1.5 text-xs font-semibold bg-zinc-200/60 text-zinc-800 rounded-lg border border-zinc-300/60">
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+
+                {/* 2 Tombol Aksi Utama */}
+                <div className="flex items-center gap-3 pt-4 border-t border-zinc-200/80">
+                  <button
+                    onClick={() => setSelectedProject(currentProject)}
+                    className="flex-1 py-3 px-4 rounded-xl bg-zinc-900 text-white text-xs sm:text-sm font-semibold hover:bg-zinc-800 transition-colors text-center shadow-sm"
+                  >
+                    Read Case Study &rarr;
+                  </button>
                   <a
-                    href={project.link}
+                    href={currentProject.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 py-2.5 px-4 rounded-xl bg-white border border-zinc-200 text-zinc-900 text-xs font-semibold hover:bg-zinc-50 transition-colors text-center flex items-center justify-center gap-1.5"
+                    className="flex-1 py-3 px-4 rounded-xl bg-white border border-zinc-300 text-zinc-900 text-xs sm:text-sm font-semibold hover:bg-zinc-100 transition-colors text-center flex items-center justify-center gap-2"
                   >
-                    <span>{project.linkText}</span>
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span>{currentProject.linkText}</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
                 </div>
-              </SpotlightCard>
-            ))}
+              </div>
+
+              {/* Daftar Ringkas Proyek Lain (Melayang Bersih) */}
+              <div className="space-y-3 px-2">
+                <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Other Projects</p>
+                <div className="space-y-2">
+                  {projectsData.map((proj, idx) => {
+                    if (idx === activeProjectIndex) return null;
+                    return (
+                      <div
+                        key={proj.id}
+                        onClick={() => setActiveProjectIndex(idx)}
+                        className="group flex items-center justify-between p-3.5 rounded-2xl hover:bg-zinc-200/50 transition-all cursor-pointer border-b border-zinc-200/60 last:border-0"
+                      >
+                        <div>
+                          <h4 className="text-sm font-bold text-zinc-800 group-hover:text-zinc-900 transition-colors">{proj.title}</h4>
+                          <span className="text-xs text-zinc-500 font-medium">{proj.category}</span>
+                        </div>
+                        <span className="text-zinc-400 group-hover:text-emerald-600 transition-colors text-lg">&rarr;</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+            </div>
+
           </div>
+
         </div>
       </section>
 
@@ -565,14 +597,11 @@ export default function Home() {
       {selectedProject && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-zinc-900/60 backdrop-blur-sm p-4 animate-fadeIn">
           <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative space-y-6 max-h-[90vh] overflow-y-auto">
-            {/* Tombol Close */}
             <button
               onClick={() => setSelectedProject(null)}
               className="absolute top-5 right-5 w-9 h-9 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-600 hover:bg-zinc-200 transition-colors"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              ✕
             </button>
 
             <div className="space-y-2">
@@ -620,7 +649,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="px-5 py-2.5 rounded-xl bg-zinc-900 text-white text-sm font-semibold hover:bg-zinc-800 transition-colors flex items-center gap-2"
               >
-                <span>{selectedProject.linkText}</span>
+                <span>Visit {selectedProject.linkText}</span>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
@@ -631,7 +660,7 @@ export default function Home() {
       )}
 
       {/* SECTION SELANJUTNYA (EXPERIENCE) */}
-      <section id="experience" className="min-h-screen flex items-center justify-center px-6 relative z-0 pt-20 pb-16">
+      <section id="experience" className="min-h-screen flex items-center justify-center px-6 relative z-0 pt-20 pb-16 bg-[#f4f4f6]">
         <h2 className="text-3xl font-semibold text-zinc-900">Experience Section</h2>
       </section>
 
