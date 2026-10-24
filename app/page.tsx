@@ -223,14 +223,14 @@ export default function Home() {
     }
   ];
 
-  // Data Pengalaman Kerja
+  // Data Pengalaman Kerja (Dengan nama file gambar sesuai permintaan)
   const workExperiences = [
     {
       role: 'Social Media Specialist Intern',
       company: 'Program Studi Ilmu Komputer, Universitas Pertamina',
       location: 'Jakarta Selatan, Indonesia',
       period: 'Jun 2026 – Sep 2026',
-      image: '/img/experience/socmed-up.jpg',
+      image: '/img/experience/UP.png',
       description: [
         'Memimpin tim kreatif dalam membuat konsep konten dan desain untuk media sosial departemen.',
         'Membuat berbagai materi visual untuk menyampaikan informasi akademik dan kegiatan program studi.',
@@ -243,7 +243,7 @@ export default function Home() {
       company: 'Direktorat Pendidikan, Universitas Pertamina',
       location: 'Jakarta Selatan, Indonesia',
       period: 'Des 2025 – Feb 2026',
-      image: '/img/experience/webdev-up.jpg',
+      image: '/img/experience/UP.png',
       description: [
         'Mengembangkan komponen website yang dapat digunakan kembali untuk menjaga konsistensi tampilan aplikasi.',
         'Bekerja sama dengan developer, desainer, dan stakeholder selama proses pengembangan website.',
@@ -257,7 +257,7 @@ export default function Home() {
       company: 'Logeeka Grup Indonesia',
       location: 'Tangerang Selatan, Indonesia',
       period: 'Agu 2025 – Okt 2025',
-      image: '/img/experience/logeeka-intern.jpg',
+      image: '/img/experience/logeeka.jpg',
       description: [
         'Mengembangkan beberapa halaman utama website perusahaan menggunakan Next.js, React, TypeScript, dan Tailwind CSS.',
         'Menghubungkan website dengan REST API untuk menampilkan data portofolio dan blog secara dinamis.',
@@ -268,13 +268,13 @@ export default function Home() {
     }
   ];
 
-  // Data Pengalaman Organisasi & Kepanitiaan
+  // Data Pengalaman Organisasi & Kepanitiaan (Dengan nama file gambar sesuai permintaan)
   const orgExperiences = [
     {
       role: 'Kepala Departemen Media Informasi',
       company: 'HMIK UP | Himpunan Mahasiswa Ilmu Komputer',
       period: 'Jan 2025 – Jan 2026',
-      image: '/img/experience/hmik-lead.jpg',
+      image: '/img/experience/HMIK-UP.png',
       description: [
         'Memimpin departemen dalam mengelola strategi media, publikasi, dan informasi digital himpunan mahasiswa.'
       ],
@@ -284,7 +284,7 @@ export default function Home() {
       role: 'Kepala Divisi Media Kreatif',
       company: 'CITE UP 2024 | Computer Science Event & Competition',
       period: 'Jan 2024 – Sep 2024',
-      image: '/img/experience/citeup-lead.jpg',
+      image: '/img/experience/HMIK-UP.png',
       description: [
         'Mengkoordinasikan kebutuhan visual, materi kreatif, dan publikasi digital untuk seluruh rangkaian acara.'
       ],
@@ -294,7 +294,7 @@ export default function Home() {
       role: 'Wakil Ketua',
       company: 'MIF 3.0 | Acara & Kompetisi Festival Islam Universitas Pertamina',
       period: 'Jul 2023 – Feb 2024',
-      image: '/img/experience/mif-lead.jpg',
+      image: '/img/experience/mirai.jpg',
       description: [
         'Mendampingi ketua dalam mengarahkan operasional kepanitiaan, koordinasi antar-divisi, serta manajemen acara.'
       ],
@@ -304,7 +304,7 @@ export default function Home() {
       role: 'Technical Session Staff',
       company: 'ICEUPERTAIN 2024 | International Conference',
       period: 'Nov 2024',
-      image: '/img/experience/iceu-staff.jpg',
+      image: '/img/experience/iceupertain.png',
       description: [
         'Mengelola kelancaran aspek teknis jalannya sesi presentasi pada konferensi internasional.'
       ],
@@ -748,7 +748,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* EXPERIENCE SECTION (FOTO DI KIRI, TEKS DI KANAN - TANPA PEMBUNGKUS) */}
+      {/* EXPERIENCE SECTION TANPA PEMBUNGKUS - LOGO UTUH & SEJAJAR DENGAN KESELURUHAN KONTEN */}
       <section id="experience" className="w-full bg-[#f4f4f6] py-28 px-6 sm:px-12 md:px-20 relative z-0 scroll-mt-24">
         <div className="max-w-5xl mx-auto space-y-12">
           
@@ -794,25 +794,25 @@ export default function Home() {
               <div key={index} className="relative group">
                 
                 {/* Dot Timeline */}
-                <div className="absolute -left-[21px] sm:-left-[37px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-zinc-400 group-hover:border-emerald-600 group-hover:bg-emerald-500 transition-all duration-300" />
+                <div className="absolute -left-[21px] sm:-left-[37px] top-3 w-4 h-4 rounded-full bg-white border-2 border-zinc-400 group-hover:border-emerald-600 group-hover:bg-emerald-500 transition-all duration-300" />
 
-                {/* Grid Layout Langsung: Kolom Kiri Foto, Kolom Kanan Teks */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                {/* Layout Item: Logo di Kiri (tanpa pembungkus kotak, ukurannya sedikit lebih besar, tersusun sejajar rapi ke bawah) */}
+                <div className="flex items-start gap-4 sm:gap-6">
                   
-                  {/* Kolom Kiri: Foto Dokumentasi (Di Kiri) */}
+                  {/* Logo / Gambar (Tanpa card pembungkus, menggunakan object-contain agar logo utuh/tidak terpotong, ukuran sedikit diperbesar) */}
                   {item.image && (
-                    <div className="lg:col-span-5 relative w-full h-44 sm:h-52 rounded-2xl overflow-hidden bg-zinc-200 border border-zinc-300/60 shadow-xs order-1 lg:order-1">
+                    <div className="relative w-14 h-14 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center">
                       <Image
                         src={item.image}
-                        alt={item.role}
+                        alt={item.company}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="object-contain"
                       />
                     </div>
                   )}
 
-                  {/* Kolom Kanan: Detail Teks Pengalaman */}
-                  <div className={`${item.image ? 'lg:col-span-7' : 'lg:col-span-12'} space-y-3 order-2 lg:order-2`}>
+                  {/* Detail Teks Pengalaman */}
+                  <div className="flex-1 space-y-2.5 w-full">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4">
                       <div>
                         <h3 className="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight">
@@ -827,7 +827,7 @@ export default function Home() {
                       </span>
                     </div>
 
-                    <ul className="list-disc list-inside text-zinc-600 text-sm sm:text-base leading-relaxed space-y-1.5 pt-1">
+                    <ul className="list-disc list-inside text-zinc-600 text-sm sm:text-base leading-relaxed space-y-1.5">
                       {item.description.map((desc, i) => (
                         <li key={i}>{desc}</li>
                       ))}
