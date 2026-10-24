@@ -52,8 +52,9 @@ import {
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProject, setSelectedProject] = useState<any>(null);
   const [activeProjectIndex, setActiveProjectIndex] = useState(0);
+  const [activeExperienceTab, setActiveExperienceTab] = useState<'work' | 'organization'>('work');
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -130,97 +131,186 @@ export default function Home() {
     { image: '/img/about/12.jpg', alt: 'About photo 12' },
   ];
 
-  // Data Proyek Fix Anda
+  // Data Proyek
   const projectsData = [
     {
-    id: 'wifi-sensing-thesis',
-    title: 'WiFi Sensing Near Real-Time (Tugas Akhir)',
-    category: 'IOT & MACHINE LEARNING (THESIS)',
-    description: 'Mengembangkan sistem deteksi kehadiran manusia menggunakan WiFi Channel State Information (CSI) dan model LSTM berbasis Self-Attention.',
-    fullDescription: 'Penelitian tugas akhir mengenai sistem deteksi kehadiran manusia indoor menggunakan WiFi Channel State Information (CSI) dari mikrokontroler ESP32 dan model LSTM berbasis Self-Attention. Sistem ini mampu melakukan pemrosesan data, menampilkan hasil secara real-time, serta menyimpan log data. Dalam pengujian langsung, sistem mencapai akurasi 98,80% pada kondisi Line-of-Sight (LOS) dan 96,10% pada Non-Line-of-Sight (NLOS) dengan rata-rata waktu respons end-to-end sebesar 155,74 ms.',
-    image: '/img/projects/wifi-sensing.png',
-    tools: ['ESP32', 'Python', 'LSTM', 'Self-Attention', 'WiFi CSI', 'RSSI'],
-    link: 'https://github.com/Fauzan-Azh/Wifi-Sensing-Deteksi-Biner-Keberadaan-Manusia',
-    linkText: 'GitHub Repository'
-  },
-  {
-    id: 'atora-digital',
-    title: 'ATORA - Platform Undangan Pernikahan Digital',
-    category: 'FULL-STACK WEB APP',
-    description: 'Mengembangkan platform undangan pernikahan digital dengan desain responsif dan template interaktif yang dapat disesuaikan.',
-    fullDescription: 'Platform undangan pernikahan digital berbasis web dengan desain responsif dan pilihan template yang fleksibel. Memiliki berbagai fitur interaktif seperti RSVP online, sapaan tamu personal, integrasi Google Maps, pemutar musik/video, timeline kisah cinta, kado digital, serta galeri foto. Dilengkapi dengan sistem pengelolaan konten yang ramah pengguna sehingga dapat dioperasikan tanpa latar belakang teknis.',
-    image: '/img/projects/atora-digital.png',
-    tools: ['Next.js', 'React', 'Tailwind CSS', 'TypeScript', 'Supabase'],
-    link: 'https://atoradigital.com',
-    linkText: 'Live Site'
-  },
-  {
-    id: 'logeeka-website',
-    title: 'Logeeka.id - Website Corporate Digital Agency',
-    category: 'FRONTEND WEB DEVELOPMENT',
-    description: 'Mengembangkan website perusahaan yang menampilkan informasi profil, portofolio layanan, klien, dan blog.',
-    fullDescription: 'Pengembangan website resmi perusahaan Logeeka Grup Indonesia yang menyajikan informasi profil perusahaan, portofolio proyek, layanan digital, klien, dan artikel blog. Website ini dihubungkan secara dinamis dengan REST API dan dikembangkan dengan memperhatikan performa serta tingkat responsivitas tinggi pada berbagai perangkat.',
-    image: '/img/projects/logeeka.png',
-    tools: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'REST API', 'Postman', 'Git'],
-    link: 'https://logeeka.https://website-logeeka-id.vercel.app/',
-    linkText: 'Live Site'
-  },
-  {
-    id: 'aiamanggihbarat',
-    title: 'Nagari Aia Manggih Barat Portal',
-    category: 'WEB DEVELOPMENT & SEO',
-    description: 'Membangun, mengonfigurasi, dan meluncurkan portal publik resmi nagari menggunakan teknologi modern dan optimasi mesin pencari.',
-    fullDescription: 'Proyek pengembangan portal resmi pemerintahan tingkat nagari (aiamanggihbarat.com) untuk transparansi informasi publik dan layanan masyarakat. Dibangun menggunakan Next.js untuk performa tinggi, terintegrasi dengan Supabase sebagai backend database, serta optimasi penuh menggunakan Google Search Console.',
-    image: '/img/projects/amb.png',
-    tools: ['Next.js', 'Supabase', 'Tailwind CSS', 'Google Search Console'],
-    link: 'https://aiamanggihbarat.com',
-    linkText: 'Live Site'
-  },
-  {
-    id: 'silungkang-portal',
-    title: 'Desa Wisata Silungkang Oso - Portal Informasi Pariwisata',
-    category: 'FULL-STACK WEB APP',
-    description: 'Mengembangkan website informasi destinasi, budaya, paket wisata, galeri, dan produk lokal.',
-    fullDescription: 'Portal informasi pariwisata terpadu yang menampilkan destinasi wisata, kebudayaan lokal, paket wisata, galeri media, serta katalog produk lokal Desa Silungkang Oso. Dilengkapi dengan fitur kontak terintegrasi dan sistem reservasi online untuk memudahkan pengunjung serta membantu promosi potensi desa.',
-    image: '/img/projects/silungkangoso.png',
-    tools: ['PHP', 'Laravel', 'Tailwind CSS', 'JavaScript', 'HTML/CSS'],
-    link: 'https://desa-wisata-silungkang-oso.vercel.app/',
-    linkText: 'Live Site'
-  },
-  {
-    id: 'smart-irrigation',
-    title: 'Sistem Irigasi Pintar IoT - Penyiraman Tanaman Otomatis',
-    category: 'INTERNET OF THINGS',
-    description: 'Membuat sistem penyiraman tanaman otomatis menggunakan ESP32 dan sensor kelembapan tanah.',
-    fullDescription: 'Sistem penyiraman tanaman otomatis berbasis IoT yang memanfaatkan mikrokontroler ESP32 dan sensor kelembapan tanah. Terintegrasi dengan platform Blynk IoT untuk memantau kondisi kelembapan tanah secara real-time serta mengendalikan aktif-tidaknya pompa air dari jarak jauh melalui aplikasi mobile dan dashboard web.',
-    image: '/img/projects/smart-irigation.png',
-    tools: ['ESP32', 'Blynk IoT', 'C++', 'Sensors & Relays'],
-    link: 'https://github.com/Fauzan-Azh/IoT-Smart-Irrigation-ESP32',
-    linkText: 'GitHub Repository'
-  },
-  {
-    id: 'accent-analysis',
-    title: 'Analisis Aksen Daerah Indonesia Menggunakan MFCC',
-    category: 'MACHINE LEARNING',
-    description: 'Menganalisis karakteristik suara dari lima aksen daerah di Indonesia menggunakan metode MFCC.',
-    fullDescription: 'Proyek analisis pemrosesan sinyal suara untuk mengidentifikasi karakteristik khas dari lima aksen daerah di Indonesia. Memproses dan mengekstraksi fitur dari 100 sampel rekaman suara menggunakan metode Mel-Frequency Cepstral Coefficients (MFCC) serta memvisualisasikan pola distribusi fitur audio untuk melihat perbedaan antaraksen.',
-    image: '/img/projects/mfcc.png',
-    tools: ['Python', 'MFCC', 'Audio Processing', 'Matplotlib', 'Scikit-learn'],
-    link: 'https://github.com/Fauzan-Azh/Mental-Wellbeing-Classification',
-    linkText: 'GitHub Repository'
-  },
-  {
-    id: 'carlo-dashboard',
-    title: 'CARLO - Dashboard Kalkulator Karbon',
-    category: 'FRONTEND & DATA VISUALIZATION',
-    description: 'Mengembangkan dashboard berbasis web untuk memantau penggunaan listrik dan memperkirakan emisi karbon.',
-    fullDescription: 'Dashboard berbasis web yang dirancang untuk memantau penggunaan konsumsi listrik dan memperkirakan tingkat emisi karbon secara efisien di Sustainability Center Universitas Pertamina. Aplikasi ini mengolah data penggunaan energi dan menyajikannya ke dalam bentuk visualisasi interaktif yang mudah dipahami oleh pengguna untuk pemantauan berkelanjutan.',
-    image: '/img/projects/carlo.png',
-    tools: ['React', 'Tailwind CSS', 'JavaScript', 'Power BI', 'HTML/CSS'],
-    link: 'https://carbon-dashboard-pearl.vercel.app/',
-    linkText: 'Live Site'
-  }
-];
+      id: 'wifi-sensing-thesis',
+      title: 'WiFi Sensing, Deteksi Keberadaan Manusia (Tugas Akhir)',
+      category: 'IOT & MACHINE LEARNING (THESIS)',
+      description: 'Mengembangkan sistem deteksi kehadiran manusia menggunakan WiFi Channel State Information (CSI) dan model LSTM berbasis Self-Attention.',
+      fullDescription: 'Penelitian tugas akhir mengenai sistem deteksi kehadiran manusia indoor menggunakan WiFi Channel State Information (CSI) dari mikrokontroler ESP32 dan model LSTM berbasis Self-Attention. Sistem ini mampu melakukan pemrosesan data, menampilkan hasil secara real-time, serta menyimpan data ke dalam format CSV. Dalam pengujian langsung, sistem mencapai akurasi 98,80% pada kondisi Line-of-Sight (LOS) dan 96,10% pada Non-Line-of-Sight (NLOS) dengan rata-rata waktu respons end-to-end sebesar 155,74 ms.',
+      image: '/img/projects/wifi-sensing.png',
+      tools: ['ESP32', 'Python', 'LSTM', 'Self-Attention', 'WiFi CSI', 'RSSI'],
+      link: 'https://github.com/Fauzan-Azh/Wifi-Sensing-Deteksi-Biner-Keberadaan-Manusia',
+      linkText: 'GitHub Repository'
+    },
+    {
+      id: 'atora-digital',
+      title: 'ATORA - Platform Undangan Pernikahan Digital',
+      category: 'FULL-STACK WEB APP',
+      description: 'Mengembangkan platform undangan pernikahan digital dengan desain responsif dan template interaktif yang dapat disesuaikan.',
+      fullDescription: 'Platform undangan pernikahan digital berbasis web dengan desain responsif dan pilihan template yang fleksibel. Memiliki berbagai fitur interaktif seperti RSVP online, sapaan tamu personal, integrasi Google Maps, pemutar musik/video, timeline kisah cinta, kado digital, serta galeri foto. Dilengkapi dengan sistem pengelolaan konten yang ramah pengguna sehingga dapat dioperasikan tanpa latar belakang teknis.',
+      image: '/img/projects/atora-digital.png',
+      tools: ['Next.js', 'React', 'Tailwind CSS', 'TypeScript', 'Supabase'],
+      link: 'https://atoradigital.com',
+      linkText: 'Live Site'
+    },
+    {
+      id: 'logeeka-website',
+      title: 'Logeeka.id - Website Corporate Digital Agency',
+      category: 'FRONTEND WEB DEVELOPMENT',
+      description: 'Mengembangkan website perusahaan yang menampilkan informasi profil, portofolio layanan, klien, dan blog.',
+      fullDescription: 'Pengembangan website resmi perusahaan Logeeka Grup Indonesia yang menyajikan informasi profil perusahaan, portofolio proyek, layanan digital, klien, dan artikel blog. Website ini dihubungkan secara dinamis dengan REST API dan dikembangkan dengan memperhatikan performa serta tingkat responsivitas tinggi pada berbagai perangkat.',
+      image: '/img/projects/logeeka.png',
+      tools: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'REST API', 'Postman', 'Git'],
+      link: 'https://website-logeeka-id.vercel.app/',
+      linkText: 'Live Site'
+    },
+    {
+      id: 'aiamanggihbarat',
+      title: 'Nagari Aia Manggih Barat Portal',
+      category: 'WEB DEVELOPMENT & SEO',
+      description: 'Membangun, mengonfigurasi, dan meluncurkan portal publik resmi nagari menggunakan teknologi modern dan optimasi mesin pencari.',
+      fullDescription: 'Proyek pengembangan portal resmi pemerintahan tingkat nagari (aiamanggihbarat.com) untuk transparansi informasi publik dan layanan masyarakat. Dibangun menggunakan Next.js untuk performa tinggi, terintegrasi dengan Supabase sebagai backend database, serta optimasi penuh menggunakan Google Search Console.',
+      image: '/img/projects/amb.png',
+      tools: ['Next.js', 'Supabase', 'Tailwind CSS', 'Google Search Console'],
+      link: 'https://aiamanggihbarat.com',
+      linkText: 'Live Site'
+    },
+    {
+      id: 'silungkang-portal',
+      title: 'Desa Wisata Silungkang Oso - Portal Informasi Pariwisata',
+      category: 'FULL-STACK WEB APP',
+      description: 'Mengembangkan website informasi destinasi, budaya, paket wisata, galeri, dan produk lokal.',
+      fullDescription: 'Portal informasi pariwisata terpadu yang menampilkan destinasi wisata, kebudayaan lokal, paket wisata, galeri media, serta katalog produk lokal Desa Silungkang Oso. Dilengkapi dengan fitur kontak terintegrasi dan sistem reservasi online untuk memudahkan pengunjung serta membantu promosi potensi desa.',
+      image: '/img/projects/silungkangoso.png',
+      tools: ['PHP', 'Laravel', 'Tailwind CSS', 'JavaScript', 'HTML/CSS'],
+      link: 'https://desa-wisata-silungkang-oso.vercel.app/',
+      linkText: 'Live Site'
+    },
+    {
+      id: 'smart-irrigation',
+      title: 'Sistem Irigasi Pintar IoT - Penyiraman Tanaman Otomatis',
+      category: 'INTERNET OF THINGS',
+      description: 'Membuat sistem penyiraman tanaman otomatis menggunakan ESP32 dan sensor kelembapan tanah.',
+      fullDescription: 'Sistem penyiraman tanaman otomatis berbasis IoT yang memanfaatkan mikrokontroler ESP32 dan sensor kelembapan tanah. Terintegrasi dengan platform Blynk IoT untuk memantau kondisi kelembapan tanah secara real-time serta mengendalikan aktif-tidaknya pompa air dari jarak jauh melalui aplikasi mobile dan dashboard web.',
+      image: '/img/projects/smart-irigation.png',
+      tools: ['ESP32', 'Blynk IoT', 'C++', 'Sensors & Relays'],
+      link: 'https://github.com/Fauzan-Azh/IoT-Smart-Irrigation-ESP32',
+      linkText: 'GitHub Repository'
+    },
+    {
+      id: 'accent-analysis',
+      title: 'Analisis Aksen Daerah Indonesia Menggunakan MFCC',
+      category: 'MACHINE LEARNING',
+      description: 'Menganalisis karakteristik suara dari lima aksen daerah di Indonesia menggunakan metode MFCC.',
+      fullDescription: 'Proyek analisis pemrosesan sinyal suara untuk mengidentifikasi karakteristik khas dari lima aksen daerah di Indonesia. Memproses dan mengekstraksi fitur dari 100 sampel rekaman suara menggunakan metode Mel-Frequency Cepstral Coefficients (MFCC) serta memvisualisasikan pola distribusi fitur audio untuk melihat perbedaan antaraksen.',
+      image: '/img/projects/mfcc.png',
+      tools: ['Python', 'MFCC', 'Audio Processing', 'Matplotlib', 'Scikit-learn'],
+      link: 'https://github.com/Fauzan-Azh/Mental-Wellbeing-Classification',
+      linkText: 'GitHub Repository'
+    },
+    {
+      id: 'carlo-dashboard',
+      title: 'CARLO - Dashboard Kalkulator Karbon',
+      category: 'FRONTEND & DATA VISUALIZATION',
+      description: 'Mengembangkan dashboard berbasis web untuk memantau penggunaan listrik dan memperkirakan emisi karbon.',
+      fullDescription: 'Dashboard berbasis web yang dirancang untuk memantau penggunaan konsumsi listrik dan memperkirakan tingkat emisi karbon secara efisien di Sustainability Center Universitas Pertamina. Aplikasi ini mengolah data penggunaan energi dan menyajikannya ke dalam bentuk visualisasi interaktif yang mudah dipahami oleh pengguna untuk pemantauan berkelanjutan.',
+      image: '/img/projects/carlo.png',
+      tools: ['React', 'Tailwind CSS', 'JavaScript', 'Power BI', 'HTML/CSS'],
+      link: 'https://carbon-dashboard-pearl.vercel.app/',
+      linkText: 'Live Site'
+    }
+  ];
+
+  // Data Pengalaman Kerja
+  const workExperiences = [
+    {
+      role: 'Social Media Specialist Intern',
+      company: 'Program Studi Ilmu Komputer, Universitas Pertamina',
+      location: 'Jakarta Selatan, Indonesia',
+      period: 'Jun 2026 – Sep 2026',
+      image: '/img/experience/socmed-up.jpg',
+      description: [
+        'Memimpin tim kreatif dalam membuat konsep konten dan desain untuk media sosial departemen.',
+        'Membuat berbagai materi visual untuk menyampaikan informasi akademik dan kegiatan program studi.',
+        'Mengatur pembagian dan alur kerja tim desain agar konten selesai sesuai kebutuhan.'
+      ],
+      skills: ['Graphic Design', 'Figma', 'Content Strategy', 'Copywriting']
+    },
+    {
+      role: 'Website Developer Intern',
+      company: 'Direktorat Pendidikan, Universitas Pertamina',
+      location: 'Jakarta Selatan, Indonesia',
+      period: 'Des 2025 – Feb 2026',
+      image: '/img/experience/webdev-up.jpg',
+      description: [
+        'Mengembangkan komponen website yang dapat digunakan kembali untuk menjaga konsistensi tampilan aplikasi.',
+        'Bekerja sama dengan developer, desainer, dan stakeholder selama proses pengembangan website.',
+        'Mengubah desain UI/UX menjadi halaman web yang responsif dan sesuai dengan rancangan.',
+        'Menggunakan Jira untuk mengatur tugas dan memantau perkembangan pekerjaan.'
+      ],
+      skills: ['React', 'Next.js', 'UI/UX Implementation', 'Jira', 'Git']
+    },
+    {
+      role: 'Junior Software Engineer Intern',
+      company: 'Logeeka Grup Indonesia',
+      location: 'Tangerang Selatan, Indonesia',
+      period: 'Agu 2025 – Okt 2025',
+      image: '/img/experience/logeeka-intern.jpg',
+      description: [
+        'Mengembangkan beberapa halaman utama website perusahaan menggunakan Next.js, React, TypeScript, dan Tailwind CSS.',
+        'Menghubungkan website dengan REST API untuk menampilkan data portofolio dan blog secara dinamis.',
+        'Menggunakan GitHub dan Postman dalam proses pengembangan dan pengujian.',
+        'Mengikuti review mingguan dan melakukan perbaikan berdasarkan masukan dari tim.'
+      ],
+      skills: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'REST API', 'Postman', 'GitHub']
+    }
+  ];
+
+  // Data Pengalaman Organisasi & Kepanitiaan
+  const orgExperiences = [
+    {
+      role: 'Kepala Departemen Media Informasi',
+      company: 'HMIK UP | Himpunan Mahasiswa Ilmu Komputer',
+      period: 'Jan 2025 – Jan 2026',
+      image: '/img/experience/hmik-lead.jpg',
+      description: [
+        'Memimpin departemen dalam mengelola strategi media, publikasi, dan informasi digital himpunan mahasiswa.'
+      ],
+      skills: ['Leadership', 'Team Management', 'Media Strategy']
+    },
+    {
+      role: 'Kepala Divisi Media Kreatif',
+      company: 'CITE UP 2024 | Computer Science Event & Competition',
+      period: 'Jan 2024 – Sep 2024',
+      image: '/img/experience/citeup-lead.jpg',
+      description: [
+        'Mengkoordinasikan kebutuhan visual, materi kreatif, dan publikasi digital untuk seluruh rangkaian acara.'
+      ],
+      skills: ['Creative Direction', 'Graphic Design', 'Figma']
+    },
+    {
+      role: 'Wakil Ketua',
+      company: 'MIF 3.0 | Acara & Kompetisi Festival Islam Universitas Pertamina',
+      period: 'Jul 2023 – Feb 2024',
+      image: '/img/experience/mif-lead.jpg',
+      description: [
+        'Mendampingi ketua dalam mengarahkan operasional kepanitiaan, koordinasi antar-divisi, serta manajemen acara.'
+      ],
+      skills: ['Event Management', 'Public Speaking', 'Coordination']
+    },
+    {
+      role: 'Technical Session Staff',
+      company: 'ICEUPERTAIN 2024 | International Conference',
+      period: 'Nov 2024',
+      image: '/img/experience/iceu-staff.jpg',
+      description: [
+        'Mengelola kelancaran aspek teknis jalannya sesi presentasi pada konferensi internasional.'
+      ],
+      skills: ['Technical Support', 'Event Operations']
+    }
+  ];
 
   const carouselItems = projectsData.map((project) => ({
     image: project.image,
@@ -236,6 +326,8 @@ export default function Home() {
     description: project.category,
     meta: '→'
   }));
+
+  const currentExperiences = activeExperienceTab === 'work' ? workExperiences : orgExperiences;
 
   return (
     <main className="min-h-screen bg-[#fafafa] text-zinc-900 selection:bg-zinc-900 selection:text-white relative overflow-x-hidden font-sans">
@@ -362,6 +454,7 @@ export default function Home() {
         </header>
       )}
 
+      {/* HERO SECTION */}
       <section id="hero" className="w-full min-h-screen bg-[#fafafa] rounded-b-[3rem] md:rounded-b-[4.5rem] shadow-sm relative overflow-hidden z-10 flex flex-col justify-center pt-36 sm:pt-32 pb-32">
         <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 md:px-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10 mb-16">
           <div className="lg:col-span-7 space-y-5 text-center lg:text-left flex flex-col items-center lg:items-start">
@@ -465,6 +558,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ABOUT SECTION */}
       <section 
         id="about" 
         className="w-full bg-[#f4f4f6] rounded-b-[3rem] md:rounded-b-[4.5rem] shadow-sm relative overflow-hidden z-0 pt-36 sm:pt-48 pb-28 -mt-16 sm:-mt-20 scroll-mt-36"
@@ -537,124 +631,231 @@ export default function Home() {
       </section>
 
       {/* PROJECTS SECTION */}
-<section id="projects" className="w-full bg-[#fafafa] py-28 px-6 sm:px-12 md:px-20 relative z-10 scroll-mt-24">
-  <div className="max-w-7xl mx-auto space-y-16">
-    
-    {/* Grid diubah menjadi 6 & 6 agar kolom kanan lebih lebar dan seimbang */}
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-      
-      {/* Kolom Kiri (Lebar 6 Kolom): Header + Carousel Autoplay */}
-      <div className="lg:col-span-6 flex flex-col justify-center w-full">
-        <div className="space-y-2 mb-4">
-          <span className="text-xs font-semibold text-emerald-600 uppercase tracking-widest">Selected Work</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">
-            Featured Projects Showcase
-          </h2>
-        </div>
+      <section id="projects" className="w-full bg-[#fafafa] py-28 px-6 sm:px-12 md:px-20 relative z-10 scroll-mt-24">
+        <div className="max-w-7xl mx-auto space-y-16">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            
+            {/* Kolom Kiri: Header + Carousel */}
+            <div className="lg:col-span-6 flex flex-col justify-center w-full">
+              <div className="space-y-2 mb-4">
+                <span className="text-xs font-semibold text-emerald-600 uppercase tracking-widest">Selected Work</span>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">
+                  Featured Projects Showcase
+                </h2>
+              </div>
 
-        <div className="w-full max-w-xl overflow-hidden py-4">
-          {!isLoading && (
-            <Carousel
-              items={carouselItems}
-              baseWidth={560}
-              aspectRatio={1.74}
-              effect="slide"
-              indicator="bars"
-              arrows={true}
-              frame={false}
-              peek={32}
-              gap={16}
-              radius={20}
-              loop={true}
-              autoplay={true}
-              autoplayDelay={6000}
-              pauseOnHover={true}
-              theme="light"
-              initialIndex={activeProjectIndex}
-              onChange={(index) => setActiveProjectIndex(index)}
-            />
-          )}
-        </div>
-      </div>
+              <div className="w-full max-w-xl overflow-hidden py-4">
+                {!isLoading && (
+                  <Carousel
+                    items={carouselItems}
+                    baseWidth={560}
+                    aspectRatio={1.74}
+                    effect="slide"
+                    indicator="bars"
+                    arrows={true}
+                    frame={false}
+                    peek={32}
+                    gap={16}
+                    radius={20}
+                    loop={true}
+                    autoplay={true}
+                    autoplayDelay={6000}
+                    pauseOnHover={true}
+                    theme="light"
+                    initialIndex={activeProjectIndex}
+                    onChange={(index) => setActiveProjectIndex(index)}
+                  />
+                )}
+              </div>
+            </div>
 
-      {/* Kolom Kanan (Lebar 6 Kolom - Lebih Lebar): Detail Informasi & AnimatedList */}
-      <div className="lg:col-span-6 flex flex-col justify-center space-y-8">
-        
-        <div className="space-y-5 transition-all px-2">
-          <div className="space-y-1.5">
-            <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">
-              {currentProject.category}
-            </span>
-            <h3 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 tracking-tight">
-              {currentProject.title}
-            </h3>
+            {/* Kolom Kanan: Detail Informasi & AnimatedList */}
+            <div className="lg:col-span-6 flex flex-col justify-center space-y-8">
+              
+              <div className="space-y-5 transition-all px-2">
+                <div className="space-y-1.5">
+                  <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">
+                    {currentProject.category}
+                  </span>
+                  <h3 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 tracking-tight">
+                    {currentProject.title}
+                  </h3>
+                </div>
+
+                <p className="text-zinc-600 text-sm sm:text-base leading-relaxed">
+                  {currentProject.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {currentProject.tools.map((tool, idx) => (
+                    <span key={idx} className="px-3 py-1.5 text-xs font-semibold bg-zinc-200/60 text-zinc-800 rounded-lg border border-zinc-300/60">
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-3 pt-4 border-t border-zinc-200/80">
+                  <button
+                    onClick={() => setSelectedProject(currentProject)}
+                    className="flex-1 py-3 px-4 rounded-xl bg-zinc-900 text-white text-xs sm:text-sm font-semibold hover:bg-zinc-800 transition-colors text-center shadow-sm"
+                  >
+                    Read Case Study &rarr;
+                  </button>
+                  <a
+                    href={currentProject.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-3 px-4 rounded-xl bg-white border border-zinc-300 text-zinc-900 text-xs sm:text-sm font-semibold hover:bg-zinc-100 transition-colors text-center flex items-center justify-center gap-2"
+                  >
+                    <span>{currentProject.linkText}</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              {/* AnimatedList untuk Other Projects */}
+              <div className="space-y-3 px-2">
+                <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Other Projects</p>
+                <div className="w-full">
+                  {!isLoading && (
+                    <AnimatedList
+                      items={otherProjectsItems}
+                      onItemSelect={(item) => setActiveProjectIndex(item.originalIndex)}
+                      initialSelectedIndex={activeProjectIndex}
+                      animation="pop"
+                      theme="light"
+                      frame={false}
+                      radius={16}
+                      gap={8}
+                      stagger={0.04}
+                      showGradients={true}
+                      fadeSize={32}
+                      maxHeight={230}
+                      width="100%"
+                      displayScrollbar={false}
+                    />
+                  )}
+                </div>
+              </div>
+
+            </div>
+
           </div>
 
-          <p className="text-zinc-600 text-sm sm:text-base leading-relaxed">
-            {currentProject.description}
-          </p>
+        </div>
+      </section>
 
-          <div className="flex flex-wrap gap-2 pt-1">
-            {currentProject.tools.map((tool, idx) => (
-              <span key={idx} className="px-3 py-1.5 text-xs font-semibold bg-zinc-200/60 text-zinc-800 rounded-lg border border-zinc-300/60">
-                {tool}
+      {/* EXPERIENCE SECTION (FOTO DI KIRI, TEKS DI KANAN - TANPA PEMBUNGKUS) */}
+      <section id="experience" className="w-full bg-[#f4f4f6] py-28 px-6 sm:px-12 md:px-20 relative z-0 scroll-mt-24">
+        <div className="max-w-5xl mx-auto space-y-12">
+          
+          {/* Header & Tab Switcher */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-zinc-300/80 pb-8">
+            <div className="space-y-2">
+              <span className="text-xs font-bold text-emerald-600 uppercase tracking-widest block">
+                Career Journey
               </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">
+                Experience & Leadership
+              </h2>
+            </div>
+
+            {/* Tab Switcher Pills */}
+            <div className="inline-flex p-1.5 rounded-2xl bg-zinc-200/80 border border-zinc-300/80 self-start sm:self-auto">
+              <button
+                onClick={() => setActiveExperienceTab('work')}
+                className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
+                  activeExperienceTab === 'work'
+                    ? 'bg-zinc-900 text-white shadow-sm'
+                    : 'text-zinc-600 hover:text-zinc-900'
+                }`}
+              >
+                Work Experience
+              </button>
+              <button
+                onClick={() => setActiveExperienceTab('organization')}
+                className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
+                  activeExperienceTab === 'organization'
+                    ? 'bg-zinc-900 text-white shadow-sm'
+                    : 'text-zinc-600 hover:text-zinc-900'
+                }`}
+              >
+                Organization & Leadership
+              </button>
+            </div>
+          </div>
+
+          {/* Timeline Item List */}
+          <div className="relative pl-4 sm:pl-8 border-l-2 border-zinc-300/80 space-y-14 my-8">
+            {currentExperiences.map((item, index) => (
+              <div key={index} className="relative group">
+                
+                {/* Dot Timeline */}
+                <div className="absolute -left-[21px] sm:-left-[37px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-zinc-400 group-hover:border-emerald-600 group-hover:bg-emerald-500 transition-all duration-300" />
+
+                {/* Grid Layout Langsung: Kolom Kiri Foto, Kolom Kanan Teks */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                  
+                  {/* Kolom Kiri: Foto Dokumentasi (Di Kiri) */}
+                  {item.image && (
+                    <div className="lg:col-span-5 relative w-full h-44 sm:h-52 rounded-2xl overflow-hidden bg-zinc-200 border border-zinc-300/60 shadow-xs order-1 lg:order-1">
+                      <Image
+                        src={item.image}
+                        alt={item.role}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  )}
+
+                  {/* Kolom Kanan: Detail Teks Pengalaman */}
+                  <div className={`${item.image ? 'lg:col-span-7' : 'lg:col-span-12'} space-y-3 order-2 lg:order-2`}>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4">
+                      <div>
+                        <h3 className="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight">
+                          {item.role}
+                        </h3>
+                        <p className="text-sm font-semibold text-emerald-600">
+                          {item.company} {item.location ? `• ${item.location}` : ''}
+                        </p>
+                      </div>
+                      <span className="inline-block px-3 py-1 text-xs font-semibold bg-zinc-200/70 text-zinc-700 rounded-lg border border-zinc-300/60 self-start sm:self-auto shrink-0">
+                        {item.period}
+                      </span>
+                    </div>
+
+                    <ul className="list-disc list-inside text-zinc-600 text-sm sm:text-base leading-relaxed space-y-1.5 pt-1">
+                      {item.description.map((desc, i) => (
+                        <li key={i}>{desc}</li>
+                      ))}
+                    </ul>
+
+                    {/* Tech / Skill Badges */}
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {item.skills.map((skill, sIdx) => (
+                        <span
+                          key={sIdx}
+                          className="px-2.5 py-1 text-[11px] font-medium bg-white text-zinc-700 rounded-md border border-zinc-200/80 shadow-2xs"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
             ))}
           </div>
 
-          <div className="flex items-center gap-3 pt-4 border-t border-zinc-200/80">
-            <button
-              onClick={() => setSelectedProject(currentProject)}
-              className="flex-1 py-3 px-4 rounded-xl bg-zinc-900 text-white text-xs sm:text-sm font-semibold hover:bg-zinc-800 transition-colors text-center shadow-sm"
-            >
-              Read Case Study &rarr;
-            </button>
-            <a
-              href={currentProject.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 py-3 px-4 rounded-xl bg-white border border-zinc-300 text-zinc-900 text-xs sm:text-sm font-semibold hover:bg-zinc-100 transition-colors text-center flex items-center justify-center gap-2"
-            >
-              <span>{currentProject.linkText}</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
-          </div>
         </div>
+      </section>
 
-        {/* AnimatedList untuk Other Projects */}
-        <div className="space-y-3 px-2">
-          <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Other Projects</p>
-          <div className="w-full">
-            {!isLoading && (
-              <AnimatedList
-                items={otherProjectsItems}
-                onItemSelect={(item) => setActiveProjectIndex(item.originalIndex)}
-                initialSelectedIndex={activeProjectIndex}
-                animation="pop"
-                theme="light"
-                frame={false}
-                radius={16}
-                gap={8}
-                stagger={0.04}
-                showGradients={true}
-                fadeSize={32}
-                maxHeight={230}
-                width="100%"
-                displayScrollbar={false}
-              />
-            )}
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
+      {/* MODAL DETAIL PROJECT */}
       {selectedProject && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-zinc-900/60 backdrop-blur-sm p-4 animate-fadeIn">
           <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative space-y-6 max-h-[90vh] overflow-y-auto">
@@ -689,7 +890,7 @@ export default function Home() {
             <div className="space-y-3">
               <h4 className="font-semibold text-zinc-900 text-sm tracking-wide uppercase">Technologies & Tools</h4>
               <div className="flex flex-wrap gap-2">
-                {selectedProject.tools.map((tool, idx) => (
+                {selectedProject.tools.map((tool: string, idx: number) => (
                   <span key={idx} className="px-3 py-1 text-xs font-medium bg-zinc-100 text-zinc-800 rounded-lg border border-zinc-200">
                     {tool}
                   </span>
@@ -719,10 +920,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
-      <section id="experience" className="min-h-screen flex items-center justify-center px-6 relative z-0 pt-20 pb-16 bg-[#f4f4f6]">
-        <h2 className="text-3xl font-semibold text-zinc-900">Experience Section</h2>
-      </section>
 
     </main>
   );
