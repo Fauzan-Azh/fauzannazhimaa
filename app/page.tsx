@@ -748,7 +748,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* EXPERIENCE SECTION TANPA PEMBUNGKUS - LOGO UTUH & SEJAJAR DENGAN KESELURUHAN KONTEN */}
+      {/* EXPERIENCE SECTION - LOGO SEJAJAR DENGAN JUDUL */}
       <section id="experience" className="w-full bg-[#f4f4f6] py-28 px-6 sm:px-12 md:px-20 relative z-0 scroll-mt-24">
         <div className="max-w-5xl mx-auto space-y-12">
           
@@ -789,63 +789,59 @@ export default function Home() {
           </div>
 
           {/* Timeline Item List */}
-          <div className="relative pl-4 sm:pl-8 border-l-2 border-zinc-300/80 space-y-14 my-8">
+          <div className="relative pl-6 sm:pl-10 border-l-2 border-zinc-300/80 space-y-12 my-8">
             {currentExperiences.map((item, index) => (
-              <div key={index} className="relative group">
+              <div key={index} className="relative group space-y-3">
                 
                 {/* Dot Timeline */}
-                <div className="absolute -left-[21px] sm:-left-[37px] top-3 w-4 h-4 rounded-full bg-white border-2 border-zinc-400 group-hover:border-emerald-600 group-hover:bg-emerald-500 transition-all duration-300" />
+                <div className="absolute -left-[29px] sm:-left-[45px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-zinc-400 group-hover:border-emerald-600 group-hover:bg-emerald-500 transition-all duration-300" />
 
-                {/* Layout Item: Logo di Kiri (tanpa pembungkus kotak, ukurannya sedikit lebih besar, tersusun sejajar rapi ke bawah) */}
-                <div className="flex items-start gap-4 sm:gap-6">
-                  
-                  {/* Logo / Gambar (Tanpa card pembungkus, menggunakan object-contain agar logo utuh/tidak terpotong, ukuran sedikit diperbesar) */}
-                  {item.image && (
-                    <div className="relative w-14 h-14 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center">
-                      <Image
-                        src={item.image}
-                        alt={item.company}
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                  )}
-
-                  {/* Detail Teks Pengalaman */}
-                  <div className="flex-1 space-y-2.5 w-full">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4">
-                      <div>
-                        <h3 className="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight">
-                          {item.role}
-                        </h3>
-                        <p className="text-sm font-semibold text-emerald-600">
-                          {item.company} {item.location ? `• ${item.location}` : ''}
-                        </p>
+                {/* Header: Logo + Judul/Instansi + Tanggal */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+                  <div className="flex items-center gap-3.5">
+                    {/* Logo Instansi */}
+                    {item.image && (
+                      <div className="relative w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center">
+                        <Image
+                          src={item.image}
+                          alt={item.company}
+                          fill
+                          className="object-contain"
+                        />
                       </div>
-                      <span className="inline-block px-3 py-1 text-xs font-semibold bg-zinc-200/70 text-zinc-700 rounded-lg border border-zinc-300/60 self-start sm:self-auto shrink-0">
-                        {item.period}
-                      </span>
-                    </div>
-
-                    <ul className="list-disc list-inside text-zinc-600 text-sm sm:text-base leading-relaxed space-y-1.5">
-                      {item.description.map((desc, i) => (
-                        <li key={i}>{desc}</li>
-                      ))}
-                    </ul>
-
-                    {/* Tech / Skill Badges */}
-                    <div className="flex flex-wrap gap-2 pt-1">
-                      {item.skills.map((skill, sIdx) => (
-                        <span
-                          key={sIdx}
-                          className="px-2.5 py-1 text-[11px] font-medium bg-white text-zinc-700 rounded-md border border-zinc-200/80 shadow-2xs"
-                        >
-                          {skill}
-                        </span>
-                      ))}
+                    )}
+                    <div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight leading-snug">
+                        {item.role}
+                      </h3>
+                      <p className="text-sm font-semibold text-emerald-600">
+                        {item.company} {item.location ? `• ${item.location}` : ''}
+                      </p>
                     </div>
                   </div>
 
+                  <span className="inline-block px-3 py-1 text-xs font-semibold bg-zinc-200/70 text-zinc-700 rounded-lg border border-zinc-300/60 self-start sm:self-auto shrink-0">
+                    {item.period}
+                  </span>
+                </div>
+
+                {/* Deskripsi Bullet Points (Rata dan Sejajar) */}
+                <ul className="list-disc list-inside text-zinc-600 text-sm sm:text-base leading-relaxed space-y-1.5 pt-1">
+                  {item.description.map((desc, i) => (
+                    <li key={i}>{desc}</li>
+                  ))}
+                </ul>
+
+                {/* Tech / Skill Badges */}
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {item.skills.map((skill, sIdx) => (
+                    <span
+                      key={sIdx}
+                      className="px-2.5 py-1 text-[11px] font-medium bg-white text-zinc-700 rounded-md border border-zinc-200/80 shadow-2xs"
+                    >
+                      {skill}
+                    </span>
+                  ))}
                 </div>
 
               </div>
@@ -854,7 +850,7 @@ export default function Home() {
 
         </div>
       </section>
-
+      
       {/* MODAL DETAIL PROJECT */}
       {selectedProject && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-zinc-900/60 backdrop-blur-sm p-4 animate-fadeIn">
