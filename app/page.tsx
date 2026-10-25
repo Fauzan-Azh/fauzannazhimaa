@@ -915,7 +915,7 @@ export default function Home() {
       </section>
 
       {/* CONTACT SECTION */}
-      <section id="contact" className="w-full bg-[#fafafa] py-28 px-6 sm:px-12 md:px-20 relative z-10 scroll-mt-24">
+      <section id="contact" className="w-full bg-[#fafafa] py-16 px-6 sm:px-12 md:px-20 relative z-10 scroll-mt-24">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
           {/* Kolom Kiri: Header + Detail Kontak & Sosmed */}
@@ -928,7 +928,7 @@ export default function Home() {
                 Let's Work Together.
               </h2>
               <p className="text-zinc-600 text-sm sm:text-base leading-relaxed">
-                Punya ide proyek, tawaran kerja sama, atau sekadar ingin menyapa? Kirimkan pesan melalui form di samping dan pesan akan langsung masuk ke inbox email Anda.
+                Punya ide proyek, tawaran kerja sama, atau sekadar ingin menyapa? Sapa saya di form disamping yaa!
               </p>
             </div>
 
