@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import emailjs from '@emailjs/browser';
 import GooeyNav from './GooeyNav';
 import Lanyard from './Lanyard';
 import RotatingHeroText from './RotatingHeroText';
@@ -55,6 +56,8 @@ export default function Home() {
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [activeProjectIndex, setActiveProjectIndex] = useState(0);
   const [activeExperienceTab, setActiveExperienceTab] = useState<'work' | 'organization'>('work');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeNavIndex, setActiveNavIndex] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -62,6 +65,42 @@ export default function Home() {
     }, 1500);
     return () => clearTimeout(timer);
   }, []);
+
+  // Sinkronisasi Indikator Navbar dengan Scroll Posisi Section
+  useEffect(() => {
+    if (isLoading) return;
+
+    const sectionIds = ['hero', 'about', 'projects', 'experience', 'contact'];
+    const sections = sectionIds.map((id) => document.getElementById(id));
+
+    const observerCallback: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = sectionIds.indexOf(entry.target.id);
+          if (index !== -1) {
+            setActiveNavIndex(index);
+          }
+        }
+      });
+    };
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -60% 0px', // Memicu perubahan saat section berada di area pandang atas-tengah
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    sections.forEach((section) => {
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sections.forEach((section) => {
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, [isLoading]);
 
   const navItems = [
     { label: 'Home', href: '#hero' },
@@ -223,14 +262,14 @@ export default function Home() {
     }
   ];
 
-  // Data Pengalaman Kerja (Dengan nama file gambar sesuai permintaan)
+  // Data Pengalaman Kerja
   const workExperiences = [
     {
       role: 'Social Media Specialist Intern',
       company: 'Program Studi Ilmu Komputer, Universitas Pertamina',
       location: 'Jakarta Selatan, Indonesia',
       period: 'Jun 2026 – Sep 2026',
-      image: '/img/experience/UP.png',
+      image: '/img/experience/ilmukomputer.jpg',
       description: [
         'Memimpin tim kreatif dalam membuat konsep konten dan desain untuk media sosial departemen.',
         'Membuat berbagai materi visual untuk menyampaikan informasi akademik dan kegiatan program studi.',
@@ -268,7 +307,7 @@ export default function Home() {
     }
   ];
 
-  // Data Pengalaman Organisasi & Kepanitiaan (Dengan nama file gambar sesuai permintaan)
+  // Data Pengalaman Organisasi & Kepanitiaan
   const orgExperiences = [
     {
       role: 'Kepala Departemen Media Informasi',
@@ -329,6 +368,26 @@ export default function Home() {
 
   const currentExperiences = activeExperienceTab === 'work' ? workExperiences : orgExperiences;
 
+  const handleEmailJSSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const SERVICE_ID = "service_j9qf458";
+    const TEMPLATE_ID = "template_6hb9j2r";
+    const PUBLIC_KEY = "Iw1DyA5MANNp6uROi";
+
+    try {
+      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, e.currentTarget, PUBLIC_KEY);
+      alert("Pesan berhasil terkirim langsung ke email Anda!");
+      (e.target as HTMLFormElement).reset();
+    } catch (error) {
+      alert("Gagal mengirim pesan. Silakan coba beberapa saat lagi.");
+      console.error("EmailJS Error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-[#fafafa] text-zinc-900 selection:bg-zinc-900 selection:text-white relative overflow-x-hidden font-sans">
       
@@ -384,6 +443,8 @@ export default function Home() {
             <GooeyNav 
               items={navItems}
               initialActiveIndex={0}
+              activeIndex={activeNavIndex}
+              onTabClick={(index) => setActiveNavIndex(index)}
               theme="light"
               size="md"
               frame={true}
@@ -443,6 +504,8 @@ export default function Home() {
             <GooeyNav 
               items={navItems}
               initialActiveIndex={0}
+              activeIndex={activeNavIndex}
+              onTabClick={(index) => setActiveNavIndex(index)}
               theme="light"
               size="sm"
               frame={true}
@@ -748,7 +811,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* EXPERIENCE SECTION - LOGO SEJAJAR DENGAN JUDUL */}
+      {/* EXPERIENCE SECTION */}
       <section id="experience" className="w-full bg-[#f4f4f6] py-28 px-6 sm:px-12 md:px-20 relative z-0 scroll-mt-24">
         <div className="max-w-5xl mx-auto space-y-12">
           
@@ -825,7 +888,7 @@ export default function Home() {
                   </span>
                 </div>
 
-                {/* Deskripsi Bullet Points (Rata dan Sejajar) */}
+                {/* Deskripsi Bullet Points */}
                 <ul className="list-disc list-inside text-zinc-600 text-sm sm:text-base leading-relaxed space-y-1.5 pt-1">
                   {item.description.map((desc, i) => (
                     <li key={i}>{desc}</li>
@@ -850,7 +913,130 @@ export default function Home() {
 
         </div>
       </section>
-      
+
+      {/* CONTACT SECTION */}
+      <section id="contact" className="w-full bg-[#fafafa] py-28 px-6 sm:px-12 md:px-20 relative z-10 scroll-mt-24">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          
+          {/* Kolom Kiri: Header + Detail Kontak & Sosmed */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="space-y-3">
+              <span className="text-xs font-bold text-emerald-600 uppercase tracking-widest block">
+                Get In Touch
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">
+                Let's Work Together.
+              </h2>
+              <p className="text-zinc-600 text-sm sm:text-base leading-relaxed">
+                Punya ide proyek, tawaran kerja sama, atau sekadar ingin menyapa? Kirimkan pesan melalui form di samping dan pesan akan langsung masuk ke inbox email Anda.
+              </p>
+            </div>
+
+            <div className="space-y-4 pt-4 border-t border-zinc-200/80">
+              <div>
+                <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Direct Email</p>
+                <a href="mailto:fauzannazhima@gmail.com" className="text-sm font-semibold text-zinc-900 hover:text-emerald-600 transition-colors">
+                  fauzannazhima@gmail.com
+                </a>
+              </div>
+
+              <div>
+                <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Location</p>
+                <p className="text-sm font-semibold text-zinc-900">
+                  Sumatera Barat, Indonesia
+                </p>
+              </div>
+            </div>
+
+            {/* Quick Link Buttons */}
+            <div className="flex flex-wrap gap-3 pt-2">
+              <a
+                href="https://github.com/Fauzan-Azh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2.5 rounded-xl bg-white border border-zinc-300 text-zinc-800 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2 shadow-xs"
+              >
+                GitHub &rarr;
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2.5 rounded-xl bg-white border border-zinc-300 text-zinc-800 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2 shadow-xs"
+              >
+                LinkedIn &rarr;
+              </a>
+            </div>
+          </div>
+
+          {/* Kolom Kanan: Form Email EmailJS */}
+          <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-zinc-200/80 shadow-md space-y-5">
+            <h3 className="text-xl font-bold text-zinc-900 tracking-tight">Send a Message</h3>
+
+            <form onSubmit={handleEmailJSSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">Nama Anda</label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    placeholder="Fauzan Azhima"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm focus:outline-none focus:border-zinc-900 transition-colors"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">Email Anda</label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="nama@email.com"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm focus:outline-none focus:border-zinc-900 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">Subjek Pesan</label>
+                <input
+                  type="text"
+                  name="subject"
+                  required
+                  placeholder="Tawaran Kerjasama / Project Inquiry"
+                  className="w-full px-4 py-3 rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm focus:outline-none focus:border-zinc-900 transition-colors"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">Pesan</label>
+                <textarea
+                  name="message"
+                  required
+                  rows={5}
+                  placeholder="Halo Fauzan, saya ingin berdiskusi mengenai..."
+                  className="w-full px-4 py-3 rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm focus:outline-none focus:border-zinc-900 transition-colors resize-none"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-3.5 px-6 rounded-xl bg-zinc-900 text-white font-semibold text-sm hover:bg-zinc-800 transition-colors shadow-sm disabled:opacity-50 cursor-pointer"
+              >
+                {isSubmitting ? 'Sending Message...' : 'Send Message →'}
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+        {/* Footer Ringkas di Paling Bawah */}
+        <div className="max-w-7xl mx-auto mt-24 pt-8 border-t border-zinc-200/80 flex items-center justify-center text-xs font-medium text-zinc-500">
+          <p>© 2026 Fauzan Azhima. All rights reserved.</p>
+        </div>
+      </section>
+
       {/* MODAL DETAIL PROJECT */}
       {selectedProject && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-zinc-900/60 backdrop-blur-sm p-4 animate-fadeIn">
